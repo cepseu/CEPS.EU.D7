@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Ddcdemo News feature.
+ */
+
+include_once 'ddcdemo_news.features.inc';

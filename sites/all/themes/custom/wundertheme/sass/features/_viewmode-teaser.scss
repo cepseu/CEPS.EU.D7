@@ -1,0 +1,175 @@
+.view-mode-teaser {
+  //@include remove-clearfix;
+
+  > div.group-left {
+    margin-right: 20px;
+    padding: 0;
+    width: 108px;
+  }
+  > div.group-right {
+    float: none;
+  }
+
+  &.node-blog-post,
+  &.node-book,
+  &.node-events,
+  &.node-project {
+    div div & {
+      margin-bottom: 40px;
+    }
+    .field-name-title {
+      clear: both;
+      margin: 0;
+      h3 {
+        font-family: $base-font-family;
+        font-size: 20px;
+        margin-bottom: 0.25em;
+        a {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .field-name-author,
+    .field-name-field-author,
+    .field-name-field-book-authors {
+      color: $funeral-grey;
+      font-size: 20px;
+      .field-item {
+        display: inline;
+        &:after {
+          content: ',';
+          margin-right: 0.25em;
+        }
+        &:last-child {
+          &:after {
+            content: '';
+          }
+        }
+      }
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .field-type-date,
+    .field-name-post-date {
+      color: $funeral-grey;
+      font-size: 14px;
+      &:before {
+        border-bottom: 2px solid $windy-grey;
+        content: " ";
+        display: block;
+        margin: 10px 0 12px;
+        width: 55px;
+      }
+    }
+    .topic-box-color {
+      background: $funeral-grey url(../images/sprite.svg) no-repeat;
+      height: 95px;
+      width: 108px;
+      .lt-ie9 & {
+        background-image: url(../images/sprite.png);
+      }
+    }
+  }
+
+  &.node-blog-post {
+    .topic-box-color {
+      background-position: 4px -302px;
+    }
+  }
+  &.node-book {
+    .topic-box-color {
+      background-position: -196px -302px;
+    }
+  }
+  &.node-events {
+    .topic-box-color {
+      background-position: -96px -302px;
+    }
+  }
+  &.node-teaser,
+  &.node-profile {
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    h3, h2 {
+      font-family: $base-font-family;
+      font-size: 20px;
+      margin-bottom: 0.25em;
+      a {
+        text-decoration: none;
+         &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .field-name-profile-function-organisation {
+      color: $funeral-grey;
+      font-size: 20px;
+      &:after {
+        border-bottom: 2px solid $windy-grey;
+        content: " ";
+        display: block;
+        margin: 10px 0 12px;
+        width: 55px;
+      }
+    }
+    .field-name-taxonomy-vocabulary-3 {
+      font-size: 14px;
+      .field-item {
+        display: inline;
+        &:after {
+          content: ',';
+          margin-right: 0.25em;
+        }
+        &:last-child {
+          &:after {
+            content: '';
+          }
+        }
+      }
+      a {
+        color: $funeral-grey;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .field-name-field-project-date {
+    color: $rainy-grey;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+}
+.node-author.node-teaser {
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+  h3, h2 {
+    font-family: $base-font-family;
+    font-size: 20px;
+    margin-bottom: 0.25em;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+/**
+ * Internet Explorer style file
+ *
+ * This file is compiled into ie.css
+ */
+
+/* ---------- Compass Extensions ---------- */
+@import "compass/reset";
+@import "compass/css3";
+
+//@import 'toolkit';
+@import 'susy';
+@import 'respond-to';
+
+// Turn off media-query output for IE-only stylesheets.
+// $breakpoint-media-output: <boolean>;
+$breakpoint-media-output: false;
+
+//Turn off media-query fallback output for non-IE stylesheets.
+// $breakpoint-ie-output: <boolean>;
+$breakpoint-ie-output: true;
+
+@import 'base/variables';
+@import 'base/colors';
+
+@import 'base/mixins-extendables';
+
+@import 'base/normalize';
+@import 'base/layout';
+@import 'base/typography';
+@import 'ckeditor';
+
+@import 'features/forms';
+@import 'features/navigation';
+@import 'features/panels';
+@import 'features/views';
+@import 'features/ds';
+
+@import 'features/design';
+@import 'features/panes';
+@import 'features/viewmode-list';
+@import 'features/viewmode-minimal';
+@import 'features/viewmode-embedded-list';
+@import 'features/viewmode-highlighted';
+@import 'features/viewmode-highlighted-embedded-list';
+@import 'features/viewmode-highlighted-list';
+@import 'features/viewmode-teaser';
+@import 'features/viewmode-miniteaser';
+@import 'features/viewmode-full';
+@import 'features/viewmode-detailed';
+
+@import 'features/search';
+@import 'features/topics';
+@import 'features/publications';
+@import 'features/events';
+@import 'features/front';
+@import 'features/staff';
+@import 'features/research';
+
+@import 'features/ie8-media';

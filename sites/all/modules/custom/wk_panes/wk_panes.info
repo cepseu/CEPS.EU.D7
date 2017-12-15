@@ -1,0 +1,4 @@
+name = WK Panes
+description = Module to provide custom ctools content types (panes)
+core = 7.x
+package = 'Wunderkraut'

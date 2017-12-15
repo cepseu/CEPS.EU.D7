@@ -1,0 +1,30 @@
+//TABLE OF CONTENTS
+The goal of this file is to provide the maintainance team an overview of all applied patches.
+
+//How to maintain this file
+To the first developer that maintains this project. The first patch is an example. Replace this by the first real patch.
+Fill this in per patch
+
+x)MODULE:name of the module
+  COMMENT:explain why the patch was needed (maybe a link to drupal.org)
+  DRUPAL:a link to drupal.org where the patch is situated
+  AUTHOR:your git user name
+
+
+//List of modules and applied patches.
+
+SUPERFISH (1)
+
+
+//PATCHES
+1)MODULE:Superfish
+  COMMENT:http://drupal.org/node/1112928
+  FILE:1112928-22-i18n_menu.patch
+  DRUPAL:http://drupal.org/node/1112928#comment-5159438
+  AUTHOR:Domi
+
+2)MODULE:
+  COMMENT:
+  DRUPAL:
+  AUTHOR:
+  

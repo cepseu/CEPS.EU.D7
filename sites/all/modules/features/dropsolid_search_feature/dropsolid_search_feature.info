@@ -1,0 +1,12 @@
+name = Dropsolid Search Feature
+description = Seach Related Stuff
+core = 7.x
+package = Features
+php = 5.2.4
+dependencies[] = ctools
+dependencies[] = facetapi
+dependencies[] = search_api
+dependencies[] = search_api_solr
+features[features_api][] = api:1
+features[search_api_index][] = apache_sorl_index
+features[search_api_server][] = apache_solr

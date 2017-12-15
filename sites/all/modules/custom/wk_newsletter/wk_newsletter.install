@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Update field display modes for Expostitions in the General Newsletter.
+ */
+function bota_layouts_update_1() {
+  $instance = field_info_instance('node', 'field_w_newsletter_expo', 'weekly_newsletter');
+  if (count($instance)) {
+    $instance['display']['full']['settings']['view_mode'] = 'newsletter_agenda';
+    field_update_instance($instance);
+  }
+}
+
+/**
+ * Make sure the expo field for general newsletter is set to rendered entity.
+ */
+function bota_layouts_update_2() {
+  $instance = field_info_instance('node', 'field_w_newsletter_expo', 'weekly_newsletter');
+  if (count($instance)) {
+    $instance['display']['full']['type'] = 'entityreference_entity_view';
+    $instance['display']['full']['settings']['view_mode'] = 'newsletter_agenda';
+    $instance['display']['full']['settings']['links'] = 1;
+    field_update_instance($instance);
+  }
+}

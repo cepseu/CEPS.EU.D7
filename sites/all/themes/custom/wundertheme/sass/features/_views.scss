@@ -1,0 +1,71 @@
+/**
+ * Views
+ */
+.views-row {
+  margin-bottom: 20px;
+}
+
+.view-content {
+  > .item-list {
+    > ul {
+      padding: 0;
+    }
+  }
+}
+
+/**
+ * pager
+ */
+.item-list .pager,
+.item-list .fake-pager {
+  border-top: 1px solid $cloudy-grey;
+  list-style: none;
+  margin: 40px 0;
+  padding: 30px 0 0 0;
+  text-align: center;
+  li {
+    display: inline-block;
+    margin: 0 0.25em;
+    padding: 0;
+    &.pager-current {
+      padding: 2px;
+    }
+  }
+  a {
+    color: $funeral-grey;
+    padding: 2px;
+    text-decoration: none;
+  }
+  .pager-first,
+  .pager-previous,
+  .pager-next,
+  .pager-last {
+    a {
+      @include button-link;
+      padding: 2px;
+    }
+  }
+  .pager-first {
+    a {
+      //background-position: 2px center;
+      //width: 13px;
+    }
+  }
+  .pager-previous {
+    a {
+      //background-position: -12px center;
+    }
+  }
+  .pager-next {
+    a {
+      //background-position: -22px center;
+    }
+  }
+  .pager-last  {
+    a {
+      //background-position: -32px center;
+      //width: 13px;
+    }
+  }
+}
+

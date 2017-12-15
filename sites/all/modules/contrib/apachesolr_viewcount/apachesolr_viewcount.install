@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the apachesolr_viewcount module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Create solr_node_view_count table.
+ */
+function apachesolr_viewcount_schema() {
+  $schema['solr_node_view_count'] = array(
+    'fields' => array(
+      'nid' => array(
+        'type' => 'int',
+        'description' => 'nid of the node',
+      ),
+      'is_solr_indexed' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Status to indicate whether indexed to solr or not',
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_enable().
+ */
+function apachesolr_viewcount_enable() {
+  // Redirect to View count settings page immediately after enabling the module.
+  menu_rebuild();
+  drupal_set_message(t("Kindly configure the settings"));
+  drupal_goto('admin/config/search/apachesolr/viewcount');
+}

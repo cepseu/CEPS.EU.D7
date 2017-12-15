@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Dropsolid Search Feature feature.
+ */
+
+include_once 'dropsolid_search_feature.features.inc';

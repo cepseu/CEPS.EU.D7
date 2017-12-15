@@ -1,0 +1,5 @@
+name = Newsletters
+description = Providing custom newsletter layouts
+core = 7.x
+package = 'Wunderkraut'
+dependencies[] = panels

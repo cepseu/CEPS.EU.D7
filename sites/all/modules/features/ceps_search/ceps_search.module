@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the ceps_search feature.
+ */
+
+include_once 'ceps_search.features.inc';

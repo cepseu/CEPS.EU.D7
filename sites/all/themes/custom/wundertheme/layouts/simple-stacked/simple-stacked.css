@@ -1,0 +1,12 @@
+.panels-dnd .panel-simple-stacked {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.panels-dnd .panel-simple-stacked .panel-panel {
+  margin-bottom: 0.5em;
+}
+
+.panels-dnd .panel-simple-stacked .panel-separator {
+  margin: 0 0 1em 0;
+}

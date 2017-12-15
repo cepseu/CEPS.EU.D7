@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<extension key="org.civicoop.documents" type="module">
+  <file>documents</file>
+  <name>Documenten</name>
+  <description>Documenten opslag in CiviCRM voor PUM</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>CiviCooP</author>
+    <email>helpdesk@civicoop.org</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://guthub.com/CiviCooP/org.civicoop.documents</url>
+    <url desc="documentation">https://guthub.com/CiviCooP/org.civicoop.documents/README.md</url>
+    <url desc="Support">http://civicoop.org</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2016-12-05</releaseDate>
+  <version>1.6</version>
+  <develStage>stable</develStage>
+  <compatibility>
+    <ver>4.4</ver>
+    <ver>4.7</ver>
+  </compatibility>
+  <comments>Extension is live at several clients</comments>
+  <civix>
+    <namespace>CRM/Documents</namespace>
+  </civix>
+<downloadUrl>https://github.com/CiviCooP/org.civicoop.documents/archive/1.6.zip</downloadUrl></extension>

@@ -1,0 +1,80 @@
+/**
+ * Custom styling of the CEPS webforms
+ */
+
+.webform-client-form {}
+
+/**
+ * All webform components
+ */
+.webform-client-form .form-item {
+	width: 100%;
+	display: block;
+}
+
+/**
+ * All webform component labels
+ */
+.webform-client-form .form-item > label {
+	font-size: 15px;
+	line-height: 135%;
+	float: left;
+	display: block;
+	width: 28%;
+	margin: 0 2% 0 0;
+	padding: 0;
+}
+
+/**
+ * Field wrapper added by module
+ */
+.webform-client-form .form-item .form-item-field {
+	width: 70%;
+	float: left;
+}
+.webform-client-form .form-item .markup {
+	padding: 0 0 0 30%;
+	width: 100%;
+}
+
+/**
+ * Date picker fields
+ */
+.webform-client-form .form-item .description {
+	padding: 0 0 0 30%;
+	width: 100%;
+}
+.webform-client-form .webform-datepicker .form-item {
+	width: 30%;
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+}
+.webform-client-form .webform-datepicker .form-item select {
+	width: 100%;
+}
+
+/**
+ * File managed fields
+ */
+.webform-client-form .managed-file input[type="file"] {
+	width: 70%;
+} 
+.webform-client-form .managed-file input[type="submit"] {
+	float: right;
+}
+
+/**
+ * Form action buttons
+ */
+.webform-client-form .form-actions {
+	padding: 0 0 0 30%;
+}
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}

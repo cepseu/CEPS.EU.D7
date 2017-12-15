@@ -1,0 +1,4 @@
+name = WK General
+description = General purpose module for CEPS
+core = 7.x
+package = 'Wunderkraut'

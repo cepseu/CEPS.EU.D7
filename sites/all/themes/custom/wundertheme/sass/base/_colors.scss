@@ -1,0 +1,37 @@
+/**
+ * Colors
+ *
+ * All colors used in the project should be declared here.
+ */
+
+$oasis-green:           #55816c;
+$oasis-green-light:     #b9c9c2;
+$polka-red:             #df272f;
+$ink-blue:              #2b4796;
+$concentrate-yellow:    #f1962a;
+$dreft-green:           #19964d;
+$sticky-pink:           #df2a8a;
+$british-grey:          #5f5f61;
+$sailing-blue:          #2fa4d4;
+$traffic-orange:        #ec6035;
+
+$fog-grey:              #f7f7f7;
+$cloudy-grey:           #d3d2d2;
+$windy-grey:            #b1b1b1;
+$rainy-grey:            #999999;
+$stormy-grey:           #868686;
+$funeral-grey:          #666666;
+
+$base-text-color: #030303;
+$base-selected-text-color: invert($base-text-color);
+$base-selected-text-background-color: $base-text-color;
+
+$extra-text-color: $rainy-grey;
+
+$base-link-color: inherit;
+$base-link-hover-color: $base-text-color;
+
+// messages
+$message-green: #c2f75f;
+$message-yellow: #fff05d;
+$message-red: #f7765f;

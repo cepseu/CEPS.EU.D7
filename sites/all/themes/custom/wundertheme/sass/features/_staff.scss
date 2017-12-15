@@ -1,0 +1,17 @@
+.view-staff {
+  .views-row {
+    float: left;
+    width: 50%;
+  }
+  .views-row-odd {
+    clear: both;
+    padding-right: 25px;
+  }
+  .views-row-even {
+    padding-left: 25px;
+  }
+  .item-list {
+    @include clearfix;
+    margin-bottom: 50px;
+  }
+}

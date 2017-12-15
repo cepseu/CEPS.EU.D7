@@ -1,0 +1,250 @@
+/**
+ * Variables
+ *
+ * All general variables should be set here.
+ */
+@font-face {
+  font-family: 'Flama Basic';
+  src: url("../fonts/Flama-Basic.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/Flama-Basic.eot?#iefix") format("embedded-opentype"), url("../fonts/Flama-Basic.woff") format("woff"), url("../fonts/Flama-Basic.svg#svgFontName") format("svg");
+  /* Legacy iOS */
+}
+
+/**
+ * Colors
+ *
+ * All colors used in the project should be declared here.
+ */
+/* Grid */
+/* Breakpoints */
+/* Font stuff */
+/**
+ * Colors
+ *
+ * All colors used in the project should be declared here.
+ */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: " ";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.hidden {
+  position: absolute;
+  left: -9999em;
+}
+
+.wysiwyg,
+.taxonomy-term-description,
+.cke_editable {
+  font-family: helvetica, arial, sans-serif;
+}
+.lt-ie9 .wysiwyg p, .lt-ie9
+.taxonomy-term-description p, .lt-ie9
+.cke_editable p {
+  text-align: justify;
+}
+@media screen and (min-width: 1000px) {
+  .wysiwyg p,
+  .taxonomy-term-description p,
+  .cke_editable p {
+    text-align: justify;
+  }
+}
+.wysiwyg p,
+.wysiwyg ol,
+.wysiwyg ul,
+.wysiwyg table,
+.wysiwyg blockquote,
+.wysiwyg h4,
+.taxonomy-term-description p,
+.taxonomy-term-description ol,
+.taxonomy-term-description ul,
+.taxonomy-term-description table,
+.taxonomy-term-description blockquote,
+.taxonomy-term-description h4,
+.cke_editable p,
+.cke_editable ol,
+.cke_editable ul,
+.cke_editable table,
+.cke_editable blockquote,
+.cke_editable h4 {
+  margin: 1em 0;
+}
+.wysiwyg p:first-child,
+.wysiwyg ol:first-child,
+.wysiwyg ul:first-child,
+.wysiwyg table:first-child,
+.wysiwyg blockquote:first-child,
+.wysiwyg h4:first-child,
+.taxonomy-term-description p:first-child,
+.taxonomy-term-description ol:first-child,
+.taxonomy-term-description ul:first-child,
+.taxonomy-term-description table:first-child,
+.taxonomy-term-description blockquote:first-child,
+.taxonomy-term-description h4:first-child,
+.cke_editable p:first-child,
+.cke_editable ol:first-child,
+.cke_editable ul:first-child,
+.cke_editable table:first-child,
+.cke_editable blockquote:first-child,
+.cke_editable h4:first-child {
+  margin: 0 0 1em;
+}
+.wysiwyg h2,
+.wysiwyg h3,
+.taxonomy-term-description h2,
+.taxonomy-term-description h3,
+.cke_editable h2,
+.cke_editable h3 {
+  margin: 1.5em 0;
+}
+.wysiwyg h2:first-child,
+.wysiwyg h3:first-child,
+.taxonomy-term-description h2:first-child,
+.taxonomy-term-description h3:first-child,
+.cke_editable h2:first-child,
+.cke_editable h3:first-child {
+  margin: 0 0 1.5em;
+}
+.wysiwyg ol, .wysiwyg ul,
+.taxonomy-term-description ol,
+.taxonomy-term-description ul,
+.cke_editable ol,
+.cke_editable ul {
+  padding-left: 31px;
+}
+.wysiwyg ol ol, .wysiwyg ol ul, .wysiwyg ul ol, .wysiwyg ul ul,
+.taxonomy-term-description ol ol,
+.taxonomy-term-description ol ul,
+.taxonomy-term-description ul ol,
+.taxonomy-term-description ul ul,
+.cke_editable ol ol,
+.cke_editable ol ul,
+.cke_editable ul ol,
+.cke_editable ul ul {
+  margin: 0;
+}
+.wysiwyg ol > li, .wysiwyg ul > li,
+.taxonomy-term-description ol > li,
+.taxonomy-term-description ul > li,
+.cke_editable ol > li,
+.cke_editable ul > li {
+  margin: 0.25em 0;
+}
+.wysiwyg ol > li:before, .wysiwyg ul > li:before,
+.taxonomy-term-description ol > li:before,
+.taxonomy-term-description ul > li:before,
+.cke_editable ol > li:before,
+.cke_editable ul > li:before {
+  background: #fff;
+  content: '';
+  border: 2px solid #55816c;
+  display: inline-block;
+  font-size: 10px;
+  height: 10px;
+  margin-right: 10px;
+  line-height: 12px;
+  vertical-align: 0;
+  width: 10px;
+  margin-left: -20px;
+}
+.wysiwyg ol,
+.taxonomy-term-description ol,
+.cke_editable ol {
+  counter-reset: ol-counter;
+}
+.wysiwyg ol > li:before,
+.taxonomy-term-description ol > li:before,
+.cke_editable ol > li:before {
+  color: white;
+  content: counter(ol-counter);
+  counter-increment: ol-counter;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  background: #55816c;
+  vertical-align: 1px;
+  height: 16px;
+  width: 16px;
+  line-height: 16px;
+  margin-right: 16px;
+  margin-left: -31px;
+}
+.wysiwyg p > blockquote,
+.taxonomy-term-description p > blockquote,
+.cke_editable p > blockquote {
+  margin: 0;
+}
+.wysiwyg img,
+.taxonomy-term-description img,
+.cke_editable img {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+.wysiwyg .img-float-left,
+.taxonomy-term-description .img-float-left,
+.cke_editable .img-float-left {
+  float: left;
+  margin-right: 20px;
+}
+.wysiwyg .img-float-right,
+.taxonomy-term-description .img-float-right,
+.cke_editable .img-float-right {
+  float: right;
+  margin-left: 20px;
+}
+.wysiwyg dl,
+.taxonomy-term-description dl,
+.cke_editable dl {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  vertical-align: top;
+}
+.wysiwyg dl dt,
+.taxonomy-term-description dl dt,
+.cke_editable dl dt {
+  font-size: 20px;
+}
+.wysiwyg dl dd,
+.taxonomy-term-description dl dd,
+.cke_editable dl dd {
+  color: #666666;
+}
+.lt-ie9 .wysiwyg dl, .lt-ie9
+.taxonomy-term-description dl, .lt-ie9
+.cke_editable dl {
+  width: 50%;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+@media screen and (min-width: 500px) {
+  .wysiwyg dl,
+  .taxonomy-term-description dl,
+  .cke_editable dl {
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+}
+.lt-ie9 .wysiwyg dl, .lt-ie9
+.taxonomy-term-description dl, .lt-ie9
+.cke_editable dl {
+  width: 33%;
+}
+@media screen and (min-width: 1000px) {
+  .wysiwyg dl,
+  .taxonomy-term-description dl,
+  .cke_editable dl {
+    width: 33%;
+  }
+}

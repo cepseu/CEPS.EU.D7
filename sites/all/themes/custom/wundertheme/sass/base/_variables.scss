@@ -1,0 +1,53 @@
+/**
+ * Variables
+ *
+ * All general variables should be set here.
+ */
+
+@font-face {
+  font-family: 'Flama Basic';
+  src: url('../fonts/Flama-Basic.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Flama-Basic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Flama-Basic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/Flama-Basic.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@import 'colors';
+
+$legacy-support-for-ie: true;
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie7: false;
+$legacy-support-for-ie8: true;
+
+
+/* Grid */
+
+$grid-margin: 3.87931%; // 36px on a 928px width
+
+//2col
+$col2-width:  (100 - $grid-margin) / 2;
+
+//3col
+$col3-width:  (100 - (2 * $grid-margin)) / 3;
+
+
+/* Breakpoints */
+
+$breakpoint_1: 500px;
+$breakpoint_2: 1000px;
+$breakpoint_1_padding: 3.6%;
+$breakpoint_2_padding: 36px;
+
+/* Font stuff */
+$base-font-size: 16px;
+$base-line-height: 24px;
+$base-font-family: Helvetica, Arial, sans-serif;
+$display-font-family: 'Flama Basic', $base-font-family;
+
+// The font sizes for h1-h6.
+$h1-font-size: 2    * $base-font-size !default;
+$h2-font-size: 1.5  * $base-font-size !default;
+$h3-font-size: 1.17 * $base-font-size !default;
+$h4-font-size: 1    * $base-font-size !default;
+$h5-font-size: 0.83 * $base-font-size !default;
+$h6-font-size: 0.75 * $base-font-size !default;

@@ -1,0 +1,38 @@
+<?php
+
+/**
+* Implements hook_block_info().
+*/
+function ceps_general_block_info() {
+  $blocks = array();
+  $blocks['ceps_social'] = array(
+    'info' => t('Social links'),
+  );
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function ceps_general_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'ceps_social':
+      $block['subject'] = '';
+      $block['content'] = _ceps_general_block_social();
+      break;
+  }
+  return $block;
+}
+
+function _ceps_general_block_social() {
+  $output = '<div class="social">';
+  // email
+  $output .= '<a class="email" href="mailto:info@ceps.eu">email</a>';
+  // twitter
+  $output .= '<a class="twitter" href="https://twitter.com/CEPS_thinktank">twitter</a>';
+  // linkedin
+  $output .= '<a class="linkedin" href="http://www.linkedin.com/company/ceps">linkedin</a>';
+  $output .= '</div>';
+  return $output;
+}

@@ -1,0 +1,210 @@
+<?php
+
+class SoRemoteTestCase extends DrupalRemoteTestCase {
+
+  public function setUp() {
+    parent::setUp();
+    /// Fix bug @link http://drupal.org/node/1176580
+    $this->remoteUrl = rtrim(url('', array('absolute' => TRUE)), '/');
+  }
+
+  public function tearDown() {
+    $this->_cleanupUsers();
+    parent::tearDown();
+  }
+
+  /**
+   * Create a node based on a structure definition.
+   * 
+   * @param type $contenttype
+   * @param type $vars Additional vars passed to the structure definition.
+   * @return type
+   */
+  protected function assertImageBySrc($src, $index = 0, $message = '', $group = 'Other') {
+    $images = $this->xpath('//img[contains(@src, :src)]', array(':src' => $src));
+    $message = ($message ? $message : t('Image with src %src found.', array('%src' => $src)));
+    return $this->assert(isset($images[$index]), $message, $group);
+  }
+
+  public function SoTestCreateNode($contenttype = NULL) {
+    $structure = $this->SoTestGetStructure($contenttype);
+    $node = $this->SoTestSaveStructure($contenttype, $structure);
+    return $node;
+  }
+
+  public function SoTestNewTerm($contenttype = NULL) {
+    $structure = $this->SoTestGetStructureTerm($contenttype);
+    $term = $this->SoTestSaveStructureTerm($contenttype, $structure);
+    return $term;
+  }
+
+  public function SoTestGetStructure($contenttype) {
+    $function_name = str_replace('-', '_', $contenttype);
+    $function_name = '_nodestructure_' . $function_name;
+    if (method_exists($this, $function_name)) {
+      $struct = $this->{$function_name}();
+    }
+    else {
+      $this->error('No node definition found for contenttype ' . $contenttype);
+      return;
+    }
+    return $struct;
+  }
+
+  public function SoTestGetStructureTerm($contenttype) {
+    $function_name = str_replace('-', '_', $contenttype);
+    $function_name = '_termstructure_' . $function_name;
+    if (method_exists($this, $function_name)) {
+      $struct = $this->{$function_name}();
+    }
+    else {
+      $this->error('No node definition found for contenttype ' . $contenttype);
+      return;
+    }
+    return $struct;
+  }
+
+  /**
+   *  Saves a structure as a node
+   */
+  public function SoTestSaveStructure($contenttype, $structure) {
+    $this->drupalGet('node/add/' . $contenttype);
+    $this->assertResponse(200, 'Logged in user ' . $this->loggedInUser->name . ' is allowed to create node of type ' . $contenttype . '.');
+    $this->drupalPost('node/add/' . $contenttype, $structure, t('Save'));
+    $node = $this->getLastUpdatedNode($structure['title']);
+    $this->nodes[$node->nid] = $node;
+
+    return $node;
+  }
+
+  /**
+   *  Saves a structure as a term
+   */
+  public function SoTestSaveStructureTerm($contenttype, $structure) {
+    $this->drupalGet('admin/structure/taxonomy/' . $contenttype . '/add');
+    $this->assertResponse(200, 'Logged in user ' . $this->loggedInUser->name . ' is allowed to create term of type ' . $contenttype . '.');
+    $this->drupalPost('admin/structure/taxonomy/' . $contenttype . '/add', $structure, t('Save'));
+    $term = $this->_getLastSavedTerm($structure['name'], $contenttype);
+    $this->assertText(strip_tags(t('Created new term %term.', array('%term' => $term->name))));
+    $this->term[$term->tid] = $term;
+
+    return $term;
+  }
+
+  /**
+   * Login a new user of the specified role.
+   * Switch user if a user is already logged in.
+   */
+  public function SoUserLogin($role = 'anonymous user') {
+    $user = $this->drupalCreateUser(array());
+    $rid = db_query("SELECT rid FROM {role} WHERE name = :name", array(':name' => $role))->fetchColumn(0);
+    $user->roles = array();
+    $user->roles[$rid] = $role;
+    $edit['roles'] = $user->roles;
+    $this->privileged_user = user_save($user, $edit);
+    $this->drupalLogin($user);
+    $this->verbose('Ingelogd als gebruiker: ' . $user->name . ' (rol: ' . $role . ')');
+    $this->users[$user->uid] = $user;
+    return $user;
+  }
+
+  public function SoTestDeleteNode($nid) {
+    $node = node_load($nid, NULL, TRUE);
+    $this->verbose('Deleting node "' . $node->title . '" (type: ' . $node->type . ' nid: ' . $node->nid . ').');
+    $this->drupalGet('node/' . $node->nid . '/delete');
+    $this->assertResponse(200, 'User has permission to delete node "' . $node->title . '" (type: ' . $node->type . ' nid: ' . $node->nid . ').');
+    $this->assertRaw(t('Are you sure you want to delete %title?', array('%title' => $node->title)), 'Delete question found');
+    $this->drupalPost("node/$node->nid/delete", '', t('Delete'));
+  }
+
+  public function SoTestDeleteTerm($tid) {
+    $this->drupalPost("taxonomy/term/" . $tid . "/edit", '', t('Delete'));
+    // Multistep taxonomy dele form. So we can't press the second delete button.
+    $this->assertResponse(200, 'User is allawed to the page');
+    taxonomy_term_delete($tid);
+  }
+
+  /** Internal helperfunctions */
+  private function _cleanupUsers() {
+    if (isset($this->users)) {
+      foreach ($this->users as $user) {
+        user_delete($user->uid);
+        debug('user ' . $user->uid . ':' . $user->name . 'deleted and his content');
+      }
+    }
+    $this->delete_roles();
+  }
+
+  private function delete_roles() {
+    $users = db_query("SELECT name FROM {role}");
+
+    $result = $users->fetchCol();
+
+    foreach ($result as $role) {
+      if (strstr($role, 'test')) {
+        user_role_delete($role);
+      }
+    }
+  }
+
+  public function getLastUpdatedNode($unique_title) {
+    $query = db_select('node', 'n');
+    $query->fields('n', array('nid'));
+    $query->condition('n.title', $unique_title, '=');
+    $nid = $query
+        ->execute()
+        ->fetchCol(0);
+    $node = node_load($nid[0]);
+    debug($nid);
+    return $node;
+  }
+
+  private function _getLastSavedTerm($unique_title, $content_type) {
+    $query = db_select('taxonomy_term_data', 'ttd');
+    $query->fields('ttd', array('tid'));
+    $query->join('taxonomy_vocabulary', 'tv', 'tv.vid = ttd.vid');
+    $query->condition('ttd.name', $unique_title, '=');
+    $query->condition('tv.machine_name', $content_type, '=');
+    $result = $query->execute();
+
+    $tid = $result->fetchField();
+    debug($tid);
+    $term = taxonomy_term_load($tid);
+    return $term;
+  }
+    
+  /**
+   * Retrieves a Drupal path or an absolute path.
+   *
+   * @param $path
+   *   Drupal path or URL to load into internal browser
+   * @param $options
+   *   Options to be forwarded to url().
+   * @param $headers
+   *   An array containing additional HTTP request headers, each formatted as
+   *   "name: value".
+   * @return
+   *   The retrieved HTML string, also available as $this->drupalGetContent()
+   */
+  protected function drupalGet($path, array $options = array(), array $headers = array()) {
+    $options['absolute'] = TRUE;
+
+    // We re-using a CURL connection here. If that connection still has certain
+    // options set, it might change the GET into a POST. Make sure we clear out
+    // previous options.
+    $out = $this->curlExec(array(CURLOPT_HTTPGET => TRUE, CURLOPT_URL => url($path, $options), CURLOPT_NOBODY => FALSE, CURLOPT_HTTPHEADER => $headers));
+    $this->refreshVariables(); // Ensure that any changes to variables in the other thread are picked up.
+
+    // Replace original page output with new output from redirected page(s).
+    if ($new = $this->checkForMetaRefresh()) {
+      $out = $new;
+    }
+    $this->verbose('GET request to: ' . $path .
+                   '<hr />Ending URL: ' . $this->getUrl() .
+                   '<hr />' . $out);
+    
+    //$this->assertNoRaw('<h2 class="element-invisible">' . t('Error message') . '</h2>', 'Geen error messages gevonden op de pagina');      
+    
+    return $out;
+  }
+}

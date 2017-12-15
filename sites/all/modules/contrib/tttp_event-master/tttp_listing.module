@@ -1,0 +1,177 @@
+<?php
+
+/*
+ +--------------------------------------------------------------------+
+ +--------------------------------------------------------------------+
+ | Copyright Tech To The People (c) 2010                              |
+ +--------------------------------------------------------------------+
+ |                                                                    |
+ | CiviCRM is free software; you can copy, modify, and distribute it  |
+ | under the terms of the GNU Affero General Public License           |
+ | Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
+ |                                                                    |
+ | CiviCRM is distributed in the hope that it will be useful, but     |
+ | WITHOUT ANY WARRANTY; without even the implied warranty of         |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License and the CiviCRM Licensing Exception along                  |
+ | with this program; if not, contact CiviCRM LLC                     |
+ | at info[AT]civicrm[DOT]org. If you have questions about the        |
+ | GNU Affero General Public License or the licensing of CiviCRM,     |
+ | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
+ +--------------------------------------------------------------------+
+ */
+
+function tttp_listing_civicrm_config(&$config) {
+  $folder= drupal_get_path('module', 'civicrm') . '/../packages/jquery/jquery-ui-1.8.5';
+  // 3.3.5 or so (at least < 3.4)
+  $config->old = file_exists ($_SERVER{'DOCUMENT_ROOT'} .'/'. $folder);
+  $path = drupal_get_path('module', 'tttp_listing');
+  // we put our module before civicrm, so in case of conflict in between the core and us, we win
+  set_include_path($path .  PATH_SEPARATOR .get_include_path() );
+
+}
+
+function tttp_listing_menu() {
+
+  $items['civicrm/event/live'] = array(
+    'title' => t('CiviCRM Event live management'),
+    'page callback' => 'tttp_listing_event_live',
+    'access arguments' => array('access CiviCRM'),
+    'type' => MENU_CALLBACK
+    //                                                   'type' => MENU_NORMAL_ITEM,
+  );
+  $items['civicrm/event/live/%event'] = array(
+
+    'title' => t('CiviCRM Event live management'),
+    'page arguments' => array(2),
+
+    'page callback' => 'tttp_listing_event_live',
+    'access arguments' => array('access CiviCRM'),
+    'type' => MENU_CALLBACK
+    //                                                   'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+
+}
+
+function tttp_listing_event_live ($event_id = null) {
+  error_reporting(E_ALL & ~E_NOTICE);
+
+  civicrm_initialize();
+  $config =& CRM_Core_Config::singleton();
+  drupal_add_js(drupal_get_path('module', 'tttp_listing') .'/js/jquery.js');
+  if ($config->old) {
+    drupal_add_css(drupal_get_path('module', 'tttp_listing') . '/js/jquery-ui-1.8.11/css/smoothness/jquery-ui-1.8.11.custom.css', 'module','all', FALSE);
+    drupal_add_js(drupal_get_path('module', 'tttp_listing') . '/js/jquery-ui-1.8.11/js/jquery-ui-1.8.11.custom.min.js','module','header',FALSE,FALSE,FALSE);
+//    drupal_add_js($data = NULL, $type = 'module', $scope = 'header', $defer = FALSE, $cache = TRUE, $preprocess = TRUE)
+    drupal_add_js(drupal_get_path('module', 'tttp_listing') . '/js/jquery-ui-1.8.11/development-bundle/ui/jquery.ui.autocomplete.js','module','header',FALSE,FALSE,FALSE);
+//<script src="/sites/all/modules/civicrm/packages/jquery/jquery.js"></script>
+  } else {
+    drupal_add_css(drupal_get_path('module', 'civicrm') . '/../packages/jquery/jquery-ui-1.8.11/css/smoothness/jquery-ui-1.8.11.custom.css');
+    drupal_add_js(drupal_get_path('module', 'civicrm') . '/../packages/jquery/jquery-ui-1.8.11/js/jquery-ui-1.8.11.custom.min.js');
+    drupal_add_js(drupal_get_path('module', 'civicrm') . '/../packages/jquery/jquery-ui-1.8.11/development-bundle/ui/jquery.ui.autocomplete.js');
+  }
+
+  drupal_add_js(drupal_get_path('module', 'civicrm') . '/../js/rest.js');
+    drupal_add_js(drupal_get_path('module', 'tttp_listing') . '/js/jquery.qrcode.min.js');
+
+
+  //drupal_add_js(drupal_get_path('module', 'civicrm') . '/../css/deprecate.css');
+  //<script type="text/javascript" src="/sites/all/modules/civicrm/drupal/../packages/jquery/jquery-ui-1.8.11/js/jquery-ui-1.8.11.custom.min.js?j"></script>
+  //<script type="text/javascript" src="/sites/all/modules/civicrm/drupal/../packages/jquery/plugins/jquery.autocomplete.js?j"></script>
+
+//<link type="text/css" rel="stylesheet" media="screen,projection" src="/sites/all/modules/civicrm/packages/jquery/jquery-ui-1.8.5/css/smoothness/jquery-ui-1.8.5.custom.css" />
+//<script src="/sites/all/modules/civicrm/packages/jquery/jquery.js"></script>
+//<script src="/sites/all/modules/civicrm/packages/jquery/jquery-ui-1.8.5/js/jquery-ui-1.8.5.custom.min.js"></script>
+
+
+  $smarty = new CRM_Core_Smarty();
+  $smarty->template_dir = array( $smarty->template_dir,  dirname(__FILE__) ."/templates" );
+
+  require_once("api/class.api.php");
+  $api= new civicrm_api3();
+  $event_id=$event_id + 0;
+  if ($event_id ==0) {
+    die (" civicrm/event/live/{event_id}");
+  }
+  if (!$api->OptionGroup->GetSingle (array('name'=>'participant_role'))){
+    die ("FATAL: ".$api->attr('error_message'));
+  }
+  $role_group = $api->attr('id');
+  if (!$api->OptionValue->Get (array('option_group_id'=>$role_group))){
+    die ("FATAL: ".$api->attr('error_message'));
+  }
+  $smarty->assign('role',$api->values());
+  if (!$api->Event->GetSingle ($event_id)){
+    die ("FATAL: ".$api->attr('error_message'));
+  }
+  drupal_set_title($api->attr('title'));
+  $smarty->assign('event',$api->result());
+  //if (!$api->Participant->Get(array('event_id'=>$event_id, 'option.limit'=>10000))){
+  if (!$api->Participant->GetFull(array('event_id'=>$event_id, 'option.limit'=>10000))){
+    die ("FATAL: ".$api->attr('error_message'));
+  }
+  $people = $api->values();
+  $smarty->assign('total',count($people));
+  $smarty->assign('participants_json',json_encode($people));
+  $smarty->assign('tttp_root', drupal_get_path('module', 'tttp_listing') );
+  return $smarty->fetch ('CRM/Event/Page/live.tpl');
+
+}
+
+function noktttp_listing_civicrm_tokenValues( &$values, &$contactIDs ) {
+  print_r($contactIDs);
+  print_r(&$values);
+  die ("toto");
+}
+
+function tttp_listing_civicrm_buildForm ( $formName, &$form ) {
+  if ($formName  == "CRM_Event_Form_Search") {
+    $tabletool="/".drupal_get_path('module', 'civi_export'). "/tabletools/media";
+    $template = CRM_Core_Smarty::singleton( );
+//    $template->assign ("tabletool",$tabletool);
+    $dir = dirname(__FILE__). "/templates/";
+    array_unshift ( $template->template_dir,$dir);
+    $rows = &$template->get_template_vars('rows');
+    if ($rows) {
+      $lastEvent = $rows[0]['event_id'];
+      $paidEvent =  $rows[0]['paid'];
+      $uniqueEvent = true;
+      foreach ( $rows as &$row) {
+        if ($lastEvent != $row['event_id']) {
+          $paidEvent =  $paidEvent || $rows[0]['paid'];
+          $uniqueEvent = false;
+        }
+        $cids [] =$row['contact_id'];  
+      }
+      if ( $_GET['q'] != 'civicrm/event/search') {// only participant listing, not event list of a contact
+        //$template->assign_by_ref ('rows',$rows);
+        $template->assign ('displayFee',$paidEvent);
+        $template->assign ('displayEvent',true);
+        return;
+      }
+      $sql = "select civicrm_contact.id as contact_id, civicrm_contact.employer_id, civicrm_contact.organization_name as employer, civicrm_country.id as country_id, civicrm_country.name as country from civicrm_contact left join civicrm_address on civicrm_contact.id=  contact_id left join  civicrm_country on  civicrm_country.id = civicrm_address.country_id  where civicrm_contact.id in ( ". implode(', ', $cids) ." );";
+      $dao = CRM_Core_DAO::executeQuery( $sql );
+      $contacts = array ();
+      while ($dao->fetch( ) ) {
+        $a= $dao->toArray();
+        $contacts[$a['contact_id']] = $a;
+      }
+      foreach ( $rows as &$row) {
+        $cid = $row['contact_id'];
+        $row = array_merge ($row,$contacts [$cid]);
+      }
+      $template->assign_by_ref ('rows',$rows);
+      $template->assign ('displayFee',$paidEvent);
+      $template->assign ('displayEvent',!$uniqueEvent);
+    } else {// we try to get rid of the pagination
+      if (method_exists ($form,'setLimit')) {
+        $form->setLimit(400);
+        return;
+      }
+    }
+  }
+}

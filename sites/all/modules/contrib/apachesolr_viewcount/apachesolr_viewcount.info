@@ -1,0 +1,19 @@
+name = Apachesolr view count
+description = Index node view count to solr and adds support for using it as sort field
+package = Search Toolkit
+core = "7.x"
+
+files[] = apachesolr_viewcount.admin.inc
+files[] = apachesolr_viewcount.drush.inc
+
+configure = admin/config/search/apachesolr/viewcount
+
+dependencies[] = apachesolr
+dependencies[] = apachesolr_search
+
+; Information added by Drupal.org packaging script on 2016-04-04
+version = "7.x-1.0"
+core = "7.x"
+project = "apachesolr_viewcount"
+datestamp = "1459776241"
+

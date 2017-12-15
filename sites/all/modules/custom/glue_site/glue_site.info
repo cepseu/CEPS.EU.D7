@@ -1,0 +1,4 @@
+name = "glue_site"
+description = "Site module: use it for all non feature or functionality related glue code"
+core = 7.x
+package = Dropsolid

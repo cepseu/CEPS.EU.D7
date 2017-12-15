@@ -1,0 +1,41 @@
+.pane-taxonomy-term-detailed {
+  margin-top: 150px;
+
+  .pane-title {
+    @media screen and (min-width: $breakpoint_1) {
+    margin: 0 auto 0 auto;
+   }
+    > .pane-title-inner {
+      background: $fog-grey;
+      display: block;
+      padding: 50px 50px 10px;
+    }
+  }
+  .node-profile.node-teaser {
+    margin-bottom: 50px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .view-mode-minimal.vocabulary-vocabulary-3 {
+    display: inline-block;
+    margin-bottom: 24px;
+    margin-right: 20px;
+    vertical-align: top;
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      display: block;
+      margin-right: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.pane-all-topics-link-pane {
+  .pane-content {
+    a {
+      @extend %mega-button;
+    }
+  }
+}

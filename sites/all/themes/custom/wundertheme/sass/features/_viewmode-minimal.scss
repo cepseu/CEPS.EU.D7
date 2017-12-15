@@ -1,0 +1,114 @@
+.view-mode-minimal {
+  position: relative;
+  &.vocabulary-topics {
+    // lots of following crap is for centering vertically
+    // see http://thephuse.com/development/the-best-way-to-vertically-align-in-css/
+    .field-name-title .field-item {
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      .field-item {
+        padding-top: 50%;
+        margin-top: -37px;
+      }
+    }
+    .field-name-title .field-item:before,
+    h2 {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .field-name-title .field-item:before {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 100%;
+      vertical-align: middle;
+      /* this just takes care of whitespace added by having display:inline-block (there are other methods) */
+      margin-left: -0.25em;
+    }
+    h2 {
+      display: inline-block;
+      color: white;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 0 12px;
+      text-transform: uppercase;
+      a {
+        text-decoration: none;
+        &:hover {
+            text-decoration:underline;
+        }
+      }
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        border: 3px solid white;
+        line-height: 40px;
+      }
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        font-size: 18px;
+        line-height: 46px;
+      }
+    }
+    .field-type-image {
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+  .node-book &.taxonomy-term.vocabulary-topics,
+  .node-events &.taxonomy-term.vocabulary-topics,
+  .node-blog-post &.taxonomy-term.vocabulary-topics,
+  &.vocabulary-vocabulary-3 {
+    height: 108px;
+    text-align: center;
+    width: 108px;
+    margin-bottom: 10px;
+    .field-name-title .field-item:before {
+      height: auto;
+    }
+    .field-name-field-topic-image {
+      display: none;
+    }
+    h2 {
+      padding: 0;
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        border: none;
+      }
+    }
+    .field-name-title {
+
+      h2 {
+        font-size: 9px;
+        a {
+          color: $rainy-grey;
+          display: block;
+          font-family: $base-font-family;
+          font-weight: bold;
+          height: 95px;
+          line-height: 1.25em;
+          padding: 18px 5px;
+          position: relative;
+          text-decoration: none;
+          width: 108px;
+          z-index: 8;
+        }
+      }
+    }
+    .field-name-field-research-area-abbreviation {
+      background: white;
+      bottom: 4px;
+      font-family: $display-font-family;
+      font-size: 34px;
+      left: 4px;
+      padding-top: 30px;
+      position: absolute;
+      right: 4px;
+      top: 4px;
+    }
+  }
+}
+
+.page-taxonomy-term .vocabulary-topics.view-mode-minimal,
+.page-topics .vocabulary-topics.view-mode-minimal {
+  border-width: 0!important;
+}

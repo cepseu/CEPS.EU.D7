@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file Install file
+ * 
+ * It enables some trivial stuff: see install profile wiki for documentation
+ */
+
+/**
+ * Implements hook_install
+ */
+function glue_install() {
+  module_load_include('inc', 'glue', 'glue.installation');
+  if (glue_check_cli() && drush_get_option('install') == 1) {  
+    glue_custom_installer();
+  }
+}
+
+/**
+ * Example hook_update_N()
+ */
+
+/*
+function glue_update_7001() {
+  //Execute code to deploy
+}*/

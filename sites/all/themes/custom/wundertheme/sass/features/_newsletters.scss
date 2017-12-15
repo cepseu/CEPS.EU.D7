@@ -1,0 +1,45 @@
+.pane-wk-newsletter-newsletter-subscription-form {
+  .pane-content {
+    @include clearfix;
+    background: $fog-grey;
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+}
+
+#mc_embed_signup {
+  .input-group {
+    @include clearfix;
+    margin-top: 50px;
+    .type {
+      float: left;
+      margin-right: $grid-margin;
+      margin-top: 30px;
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        margin-top: auto;
+        width: $col3-width;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    .disabled {
+      label {
+        color: $stormy-grey;
+      }
+    }
+  }
+  input[type="text"],
+  input[type="email"]{
+    border: 1px solid #999999;
+  }
+  .extended {
+    margin-top: 0.5em;
+  }
+  .clear {
+    margin-top: 30px;
+  }
+  .description {
+    margin-bottom: 1em;
+  }
+}

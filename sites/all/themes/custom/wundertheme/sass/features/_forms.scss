@@ -1,0 +1,332 @@
+.webform-datepicker,
+.webform-component-webform_time {
+  select {
+    width: 90px;
+  }
+}
+
+/**
+ * form elements
+ */
+input {
+  font-size: 1em;
+}
+input[type="text"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea {
+  background: $fog-grey;
+  color: $funeral-grey;
+  height: 38px;
+  border: none;
+  line-height: 38px;
+  padding: 0 16px;
+  width: 100%;
+  -webkit-appearance: none;
+  fieldset fieldset & {
+    background: $cloudy-grey;
+  }
+}
+textarea {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+  width: auto;
+}
+input[type="file"] {
+  background: white;
+  padding: 5px;
+}
+.form-type-select,
+.webform-component-select {
+  position: relative;
+  &:after {
+    background: white;
+    border-left: 1px solid $rainy-grey;
+    bottom: 1px;
+    color: $rainy-grey;
+    content: "▼";
+    display: block;
+    line-height: 38px;
+    text-align: center;
+    height: 38px;
+    pointer-events: none;
+    position: absolute;
+    right: 1px;
+    width: 38px;
+    z-index: 3000;
+  }
+}
+select {
+  background: white url(../images/select-arrow.png) no-repeat right center;
+  border: 1px solid $rainy-grey;
+  border-radius: 0;
+  font-size: 16px;
+  height: 40px;
+  padding: 6px 56px 4px 16px;
+  position: relative;
+  width: 100%;
+  -webkit-appearance: none;
+}
+select[multiple="multiple"] {
+  background: white;
+  height: auto;
+}
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+a.link-button,
+.item-list .pager a.link-button,
+.item-list .fake-pager a.link-button {
+  @include button-link;
+  background: black;
+  background: linear-gradient(to bottom, #323232 0%, $base-text-color 100%);
+  border: none;
+  box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1);
+  color: white;
+  cursor: pointer;
+  font-family: $display-font-family;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 40px;
+  padding: 0 1.6em;
+  text-transform: uppercase;
+  &.arrow {
+    &:after {
+      background: url(../images/sprite.svg) no-repeat -692px -193px;
+      content: " ";
+      display: inline-block;
+      height: 14px;
+      margin-left: 0.75em;
+      width: 16px;
+      .lt-ie9 & {
+        background-image: url(../images/sprite.png);
+      }
+    }
+  }
+
+  &.green {
+    background: linear-gradient(to bottom, $oasis-green-light 0%, $oasis-green 100%);
+    background: $oasis-green;
+      
+    &:hover {
+      background: linear-gradient(to bottom, $oasis-green 0%, $oasis-green-light 100%);
+      color: black;
+      &:after {
+        background-position-y: -243px;
+      }
+    }
+  }
+  &.grey {
+    background: $fog-grey;
+    color: black;
+    border: 1px;
+    border-color: $oasis-green;
+    &:after {
+      background-position-y: -243px;
+    }
+  }
+  &:hover {
+    background: $fog-grey;
+    background: linear-gradient(to bottom, $british-grey 0%, #323232 100%);
+    color: white;
+   }
+
+  + input[type="button"],
+  + input[type="reset"],
+  + input[type="submit"] {
+    margin-left: 1em;
+  }
+}
+
+// Re-set default cursor for disabled elements
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+html.js input.form-autocomplete {
+  background: $fog-grey url(../images/throbber.gif) no-repeat 100% 17px;
+}
+html.js input.throbbing {
+  background-position: 100% -29px;
+}
+
+textarea {
+  padding: 6px 10px;
+}
+form .description {
+  @extend .clearfix;
+  font-size: 0.8em;
+}
+.webform-component-checkbox {
+  .form-checkboxes {
+    float: left;
+    margin-right: 1em;
+    margin-top: -2px;
+  }
+}
+.form-item {
+  margin-bottom: 1.5em;
+  td > & {
+    margin-bottom: 0;
+  }
+  > label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .description {
+    font-size: 0.8em;
+    margin-top: 4px;
+  }
+}
+.views-exposed-widget > label {
+  font-weight: 700;
+}
+.form-checkboxes,
+.form-radios{
+  .form-item {
+    margin-bottom: 0.5em;
+    margin-left: 2px;
+  }
+}
+.form-type-checkbox,
+.form-type-radio {
+  > label {
+    //color: $base-text-color;
+    display: inline;
+    font-size: 1em;
+    font-weight: 400;
+  }
+}
+
+.container-inline-date {
+  > .form-item {
+    margin: 0;
+    label,
+    .date-clear {
+      display: inline;
+    }
+    .date-padding {
+      padding: 0;
+    }
+    .form-item {
+      margin-right: 1em;
+    }
+  }
+}
+
+fieldset {
+  border: 2px solid $fog-grey;
+  margin-bottom: 1.5em;
+  legend {
+    background: white;
+    border-radius: 2px;
+    font-family: $display-font-family;
+    font-size: 22px;
+    font-weight: 400;
+    margin-left: 21px;
+    padding: 5px 13px;
+    a {
+      color: adjust-lightness($base-text-color, 12%);
+      text-decoration: none;
+    }
+  }
+  .fieldset-wrapper {
+    padding: 10px;
+  }
+  &.collapsible {
+    legend {
+      a {
+        &:before {
+          content: '-';
+          display: inline-block;
+          padding-right: 8px;
+          text-align: center;
+          width: 16px;
+        }
+      }
+    }
+  }
+  &.collapsed {
+    legend {
+      a {
+        &:before {
+          content: '+';
+        }
+      }
+    }
+    html.js & {
+      border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+      min-height: 38px;
+    }
+    .description & {
+      html.js & {
+        border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+        min-height: 33px;
+      }
+    }
+  }
+  fieldset {
+    background: $fog-grey;
+    legend {
+      border-radius: 2px;
+    }
+  }
+}
+
+form.webform-client-form {
+  margin-top : 20px;
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    background: #fff;
+    border: 1px solid $rainy-grey;
+  }
+  input[type="submit"] {
+    @include background-image(linear-gradient(top, $oasis-green 0%, darken($oasis-green, 10%) 100%));
+    @include border-radius(5px);
+    &:hover,
+    &:focus {
+      @include background-image(linear-gradient(bottom, $oasis-green 0%, darken($oasis-green, 10%) 100%));
+    }
+  }
+  &.eventForm-processed {
+    display: none;
+    &.shown {
+      display: block;
+    }
+  }
+  .form-item {
+    @include clearfix
+  }
+  label {
+    width: 30%;
+    margin-right: 5%;
+    float: left;
+    text-align: right;
+    + input,
+    + select,
+    + textarea {
+      width: 65%;
+      float: left;
+    }
+  }
+  .form-required {
+    color: $polka-red;
+  }
+}

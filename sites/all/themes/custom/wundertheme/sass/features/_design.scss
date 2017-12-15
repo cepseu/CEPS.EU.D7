@@ -1,0 +1,497 @@
+/* Base link settings */
+
+a {
+  color: $base-link-color;
+  &:hover,
+  &:focus {
+    color: inherit;
+  }
+}
+
+html {
+  color: $base-text-color;
+
+  ::selection,
+  ::-moz-selection {
+    color: $base-selected-text-color;
+    background: $base-selected-text-background-color;
+  }
+}
+
+#page-wrapper {
+  //background: $site-bg;
+}
+
+#page {
+}
+
+#header,
+#navigation {
+  //background: $header-bg;
+}
+#navigation {
+  .section {
+    //background: $site-bg;
+  }
+}
+
+#content {
+  .section {
+    //background: $content-bg;
+  }
+}
+
+.panel-col-bottom {
+  @include clearfix;
+  background: $fog-grey;
+  padding-bottom: 50px;
+}
+
+/**
+ * Header
+ */
+header {
+  .container {
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      height: 120px;
+    }
+  }
+  &.with-search {
+    .container {
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        padding-bottom: 60px;
+      }
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        height: 180px;
+      }
+    }
+    .block-menu-block {
+      padding-right: 18px;
+    }
+  }
+  //
+  .social {
+    margin-top: -50px;
+    padding-bottom: 50px;
+    padding-right: 10px;
+    margin-right: 60px;
+    @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+      margin-right: 0;
+    }
+    a {
+      float: right;
+      background: transparent url('../images/sprite.svg') 0 0 no-repeat;
+      .lt-ie9 & {
+        background-image: url('../images/sprite.png');
+      }
+      text-indent: -999em;
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+      &:hover {
+        opacity: .8;
+      }
+    }
+    .facebook {
+      background-position: -234px -738px;
+    }
+    .twitter {
+      background-position: -34px -738px;
+    }
+    .linkedin {
+      background-position: -134px -738px;
+    }
+  }//
+  .block-menu-block {
+    overflow: hidden;
+    padding-left: 18px;
+    padding-top: 10px;
+    padding-right: 78px;
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      padding-left: 36px;
+      padding-right: 0;
+    }
+    .menu {
+      font-family: $display-font-family;
+      font-size: 13px;
+      text-transform: uppercase;
+      li {
+        border-bottom: 1px solid $rainy-grey;
+        &.first {
+          border-top: 1px solid $rainy-grey;
+        }
+      }
+      a {
+        color: $stormy-grey;
+        display: block;
+        line-height: 28px;
+        text-decoration: none;
+        &.active,
+        &:hover {
+          background: $fog-grey;
+          color: $oasis-green;
+        }
+      }
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        @include horizontal-menu;
+        line-height: 36px;
+        li {
+          border-bottom: none;
+          font-size: 13px;
+          margin-right: 24px;
+          &.first {
+            border-top: none;
+          }
+        }
+        a {
+          border-top: 3px solid white;
+          padding: 0 2px;
+          &.active,
+          &:hover {
+            background: none;
+            border-color: $oasis-green;
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  float: left;
+  img {
+    width: 100px;
+  }
+}
+
+.site-name {
+  @include element-invisible;
+}
+
+.slogan {
+  color: $windy-grey;
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  height: 60px;
+  overflow: hidden;
+  padding-left: 18px;
+  line-height: 70px;
+  @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+    font-size: 25px;
+    padding-left: 36px;
+  }
+  .lt-ie9 & {
+    font-size: 25px;
+    padding-left: 36px;
+  }
+}
+
+.region-header {
+  clear: both;
+  margin: 0 -12px;
+  position: relative;
+  @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+    clear: none;
+    margin: 0;
+    padding-right: 90px;
+    position: static;
+  }
+}
+
+.block-search,
+.block-views {
+  .region-header & {
+    position: static;
+  }
+}
+
+.open-search {
+  display: none;
+  .region-header & {
+    background: $fog-grey url(../images/sprite.svg) no-repeat -190px 5px;
+    background-size: 800%;
+    border: none;
+    display: block;
+    height: 60px;
+    position: absolute;
+    right: 0;
+    text-indent: -9999em;
+    top: 1px;
+    width: 60px;
+    &:hover {
+      background-color: adjust-lightness($fog-grey, -10%);
+    }
+    .lt-ie9 & {
+      background-image: url(../images/sprite.png);
+    }
+    @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+      background-position: -410px 1px;
+      background-size: auto;
+      height: 96px;
+      top: 0;
+      width: 96px;
+    }
+  }
+}
+
+.search-wrap {
+  background: $fog-grey;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+  .form-type-textfield {
+    input {
+      background: #fff;
+    }
+  }
+  .region-header & {
+    height: 0;
+    .with-search & {
+      border-bottom: 1px solid $rainy-grey;
+      border-top: 1px solid $rainy-grey;
+      padding: 10px 70px 10px 10px;
+      height: auto;
+      @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+        border-bottom: none;
+        border-top: none;
+        height: 60px;
+        padding: 10px 36px;
+      }
+    }
+  }
+  @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    .form-item {
+      float: left;
+      &.form-type-textfield {
+        width: 70%;
+        input {
+          width: 100%;
+        }
+      }
+      &.form-type-select {
+        width: 15%;
+      }
+    }
+    .form-actions,
+    .views-submit-button {
+      float: right;
+      width: 15%;
+    }
+  }
+  .panel-col-main & {
+    border-bottom: 1px solid $rainy-grey;
+    border-top: 1px solid $rainy-grey;
+    padding: 10px 70px 10px 10px;
+    height: auto;
+    @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+      border-bottom: none;
+      border-top: none;
+      height: 60px;
+      padding: 10px 36px;
+      top: 0;
+    }
+  }
+  .form-type-searchfield {
+    margin-right: -180px;
+    padding-right: 180px;
+    width: 100%;
+  }
+  input[type="search"] {
+    border: 1px solid $rainy-grey;
+  }
+}
+.panel-col-main #views-exposed-form-solr-search-search-advanced-page {
+  padding-bottom: 60px;
+}
+
+.page {
+  //margin-bottom: 50px;
+}
+
+/**
+ * Footer
+ */
+footer {
+  background: $oasis-green;
+  color: white;
+  font-family: $display-font-family;
+  line-height: 26px;
+  a {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .block {
+    h2 {
+      font-family: $display-font-family;
+      text-transform: uppercase;
+    }
+  }
+  .newsletter-block {
+    border-bottom: 1px solid $oasis-green-light;
+    padding: 80px 0 64px;
+  }
+  .contact-block {
+    > p {
+      color: $oasis-green-light;
+    }
+  }
+  .menu {
+    color: $oasis-green-light;
+    float: none;
+    margin-right: 60px;
+    @media screen and (min-width: $breakpoint_2) {
+      float: left;
+    }
+  }
+  .copyright-block {
+    margin: 30px 0 45px;
+  }
+  .top-footer-2 {
+    float: none;
+    @media screen and (min-width: $breakpoint_2) {
+      float: left;
+    }
+  }
+  .social {
+    margin-top: 30px;
+    a {
+      background: url(../images/sprite.svg) no-repeat;
+      display: inline-block;
+      height: 26px;
+      margin-right: 25px;
+      text-indent: -9999em;
+      width: 33px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .facebook {
+      background-position: -234px -837px;
+    }
+    .twitter {
+      background-position: -34px -837px;
+    }
+    .linkedin {
+      background-position: -134px -837px;
+    }
+  }
+  .newsletter-left {
+    float: left;
+    max-width: 600px;
+    h2 {
+      font-size: 30px;
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        font-size: 36px;
+      }
+      margin-bottom: 15px;
+      padding-right: 35px;
+      text-transform: uppercase;
+    }
+    h3 {
+      font-family: $base-font-family;
+      font-size: 20px;
+      margin-bottom: 20px;
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .newsletter-right {
+    float: right;
+    position: relative;
+    @include respond-wrapper-fallback($breakpoint_1, 'lt-ie9') {
+      width: 328px;
+    }
+    .newsletter-link {
+      a {
+        @extend %big-button;
+        background: white;
+
+        color: $oasis-green;
+        &:hover {
+          background: rgba(255, 255, 255, 0.8);
+        }
+        &:after {
+          background-position: -689px -493px;
+          width: 23px;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * full width titles on panes
+ */
+%wide-title {
+  font-family: $display-font-family;
+  font-size: 30px;
+  margin: 100px 0;
+  text-align: center;
+  max-width: none;
+  padding: 0;
+  position: relative;
+  text-transform: uppercase;
+  width: auto;
+  &:before {
+    border-bottom: 2px solid $cloudy-grey;
+    bottom: 14px;
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 100%;
+  }
+  > span {
+    background: white;
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 1em;
+    position: relative;
+  }
+  .panel-col-bottom & {
+    margin: 50px 0;
+    &:before {
+      border-bottom: none;
+      content: "";
+    }
+    > span {
+      background: transparent;
+    }
+  }
+}
+
+/**
+ * page-title
+ */
+h1.page-title {
+  text-align: center;
+  .page-title-inside {
+    /*border: 4px solid $base-text-color;*/
+    display: inline-block;
+    line-height: 1.3333em;
+    padding: 0.5em 1em;
+  }
+}
+
+.wide-title {
+  .pane-title {
+    @extend %wide-title;
+  }
+}
+
+.field-label-inline {
+  .field-label {
+    float: left;
+    margin-right: 0.25em;
+  }
+}
+

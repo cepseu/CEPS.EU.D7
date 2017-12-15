@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<extension key="com.pesc.sparkpost" type="module">
+  <file>sparkpost</file>
+  <name>SparkPost / CiviCRM Integration</name>
+  <description>Integrates SparkPost to CiviCRM, so email can be sent out over the SparkPost service and bounces can be processed in CiviCRM. For bulk(civimail) and transactional emails.</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Mark Rodgers, Jose Torres</author>
+    <email>itdept@pesc.com</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/proexchange/com.pesc.sparkpost</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2016-04-14</releaseDate>
+  <version>1.3.4</version>
+  <develStage>stable</develStage>
+  <compatibility>
+    <ver>4.5</ver>
+    <ver>4.6</ver>
+    <ver>4.7</ver>
+  </compatibility>
+  <comments>A SparkPost tag is added to all outgoing civimail emails. A scheduled job is created that will then use SparkPost API to fetch bounce events and process those events in civi. Setup Steps: 1) Create SparkPost account and setup SMTP in CiviCRM, save your API key. 2) Install this extension. 3) Update schduled job "SparkPost Fetch Bounces" with your API key and sending email addresses, enable scheduled job.</comments>
+  <civix>
+    <namespace>CRM/Sparkpost</namespace>
+  </civix>
+</extension>

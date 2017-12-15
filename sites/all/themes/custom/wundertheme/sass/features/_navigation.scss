@@ -1,0 +1,59 @@
+/**
+ * language switcher
+ */
+.block-locale {
+  position: absolute;
+  right: 15px;
+  text-transform: uppercase;
+  top: 0;
+  li {
+    display: inline;
+    a {
+      @include button-link;
+      color: $base-text-color;
+      text-decoration: underline;
+      &.active {
+        font-weight: 700;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.field-name-view-all-topics {
+  border-left: 1px solid white;
+  float: right;
+  width: 60%;
+  a {
+    font-family: $display-font-family;
+    font-size: 30px;
+    padding: 0 40px 0 30px;
+    text-align: left;
+    width: 100%;
+    &:after {
+      background: url(../images/sprite.svg) no-repeat -686px -588px;
+      content: ' ';
+      display: inline-block;
+      height: 29px;
+      margin-left: 35px;
+      position: relative;
+      vertical-align: -9px;
+      width: 29px;
+      .lt-ie9 & {
+        background-image: url(../images/sprite.png);
+      }
+    }
+    &:hover {
+      background: linear-gradient(to bottom, $base-text-color 0%, #323232 100%);
+    }
+  }
+}
+div#taxonomy_term_topics_detailed_group_wrap2 {
+  width: 69%;
+  margin-left: 142px;
+}
+
+.panel-pane.pane-entity-view.pane-taxonomy-term.pane-taxonomy-term-detailed.pane-taxonomy-term-detailed-topic .group-footer {
+  background-color: white;
+  padding-top: 1px;
+}

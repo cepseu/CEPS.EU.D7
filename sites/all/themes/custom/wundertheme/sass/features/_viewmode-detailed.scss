@@ -1,0 +1,127 @@
+div.view-mode-detailed {
+  background: $fog-grey;
+
+  div.panel-pane & {
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      padding: 50px 50px 0;
+    }
+  }
+
+  &.node-events {
+    margin-top: 150px;
+    .group-left {
+      float: none;
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        float: left;
+      }
+      > .field-name-title {
+        overflow: hidden;
+        &:before {
+          background: url(../images/sprite.svg) no-repeat -100px -400px;
+          content: " ";
+          display: block;
+          float: left;
+          height: 100px;
+          margin-right: 38px;
+          width: 100px;
+          .lt-ie9 & {
+            background-image: url(../images/sprite.png);
+          }
+        }
+        h2 {
+          font-size: 30px;
+          line-height: 1.5;
+          padding-left: 140px;
+        }
+      }
+    }
+
+    .group-right {
+      > .field,
+      > .field-group-div {
+        border-bottom: 1px solid $cloudy-grey;
+        margin-bottom: 1.5em;
+        padding-bottom: 1.5em;
+      }
+    }
+
+    .field-name-field-event1-secretary,
+    .field-name-field-event1-resp {
+      margin-top: 50px;
+      position: relative;
+      > .field-label {
+        color: $oasis-green;
+        font-size: 24px;
+        left: 138px;
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    .group-venue {
+      background: url(../images/sprite.svg) no-repeat -835px -776px;
+      padding-left: 48px;
+      .lt-ie9 & {
+        background-image: url(../images/sprite.png);
+      }
+    }
+    > .group-left,
+    > .group-right {
+      float: none;
+      width: auto;
+    }
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      > .group-left {
+        float: left;
+        width: 66.66667%;
+      }
+      > .group-right {
+        float: right;
+        width: 33.33333%;
+      }
+    }
+
+  }
+
+  &.node-events,
+  &.vocabulary-topics {
+    > .group-left {
+      margin-bottom: 50px;
+      padding-right: $grid-margin;
+    }
+    > .group-right {
+      margin-bottom: 50px;
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        padding-left: $grid-margin;
+      }
+    }
+    > .group-footer {
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        margin: 50px -50px 0;
+      }
+      .link-button {
+        float: right;
+      }
+      .group-wrap2 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &.vocabulary-topics {
+    > .group-left {
+      width: 100%;
+    }
+    > .group-right {
+      width: 100%;
+    }
+    @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+      > .group-left {
+        width: 75%;
+      }
+      > .group-right {
+        width: 25%;
+      }
+    }
+  }
+}

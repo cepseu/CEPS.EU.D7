@@ -1,0 +1,180 @@
+<?php
+
+/**
+ * Installation
+ */
+
+/**
+ * Custom installer
+ */
+function glue_custom_installer() {
+  //Custom installer - only works from cli with drush
+  module_load_include('inc', 'glue', 'glue.installation');
+  if (glue_check_cli()) {
+    //We keep all our functions in glue because we want to reuse them during deployment
+
+    //@todo introduce an environment variable #666 see glue_variable function
+    //@todo on next install test all this
+    //Enable modules
+    module_disable(array('toolbar', 'overlay', 'color', 'dashboard', 'help', 'rdf', 'shortcut'));
+    module_enable(
+      array(
+        'admin_menu',
+        'imce',
+        'token',
+        'pathauto',
+        'imce_wysiwyg',
+        'xmlsitemap',
+        'ctools',
+        'wysiwyg',
+        'views',
+        'panels',
+        'googleanalytics',
+        'ds',
+        'site_verify',
+        'honeypot',
+        'reroute_email',
+      )
+    );
+
+    //Enable themes
+    theme_enable(array('adminimal'));
+
+    //Dropsolid modules
+    module_enable(array('glue_testing', 'glue_deploy', 'glue_site'));
+    //Make glue hooks execute last
+    db_query("UPDATE {system} SET weight = 100 WHERE name = 'glue'");
+
+    //Install with development tools on
+    glue_developer();
+
+    //Enable dropsolid features
+    glue_enable_dropsolid_features();
+
+    //language
+    $languages = drush_get_option('language');
+    glue_pre_install($languages);
+
+    //The concept of pre install, import and post install is needed because some features might depend on content.
+    //So you ll need a way of doing stuff before and after importing content.
+    //These function should be called with their drush commands during site installation
+    glue_import_content(); //@todo introduce the manifests concept #667
+    //glue_post_install(); //@todo test
+  }
+  else {
+    watchdog('installation', t('Use cli to have glue installed'), array(), WATCHDOG_WARNING);
+  }
+}
+
+/**
+ * Perform actions to set up the site for this profile.
+ */
+function glue_pre_install($language) {
+  // Queue initialisation - The queue is needed to concurrently process the language files.
+  if (glue_check_cli()) {
+    //@todo does not work
+    //$queue = glue_create_glue_queue();
+  }
+  else {
+    $queue = null;
+  }
+
+  glue_variables();
+
+  //Format of languages must be en:fr:nl:...
+  if (glue_check_cli() && !empty($languages)) {
+    glue_languages($languages);
+    //glue_languages_update(drush_get_option('language'));//@todo not working yet should import files
+  }
+
+  glue_themes();
+  glue_text_formats();
+  glue_date_formats();
+  glue_blocks();
+  glue_menus();//@not working
+  glue_roles();
+  glue_users();
+  glue_features(); // Enable and revert all features
+  //glue_taxonomy(); // Use it to import taxonomy
+  //glue_languages_update_last($last_translations);//@todo not working yet
+  //Install wysywig #689
+  glue_wysiwyg(); //enable wysiwyg profiles jeroen
+  //@todo import aliasses patterns #692
+}
+
+/**
+ * In between you can import content
+ */
+function glue_import_content() {
+
+}
+
+/**
+ * Post install functions
+ */
+function glue_post_install() {
+  glue_menu_links();//@todo not working yet
+  glue_generate_aliasses();
+  glue_flush_image_style();
+
+  //Set glue as the last module that gets its hooks triggered
+  db_query("UPDATE {system} SET weight='100' WHERE name='glue' ");
+
+  //Rebuild access
+  node_access_rebuild();
+  cache_clear_all();
+
+  //post install hook
+  module_invoke_all('post_install');
+}
+
+/**
+ * Adaptations
+ */
+
+/**
+ * Alter permissions form
+ */
+function glue_form_alter(&$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_admin_permissions':
+      if (variable_get('platform_edit_permissions', FALSE) != TRUE) {
+        foreach ($form['checkboxes'] as $key => $checkbox) {
+          $form['checkboxes'][$key]['#disabled'] = TRUE;
+        }
+        drupal_set_message(t('This form cannot be edited due to stability reasons (tests&features). File a request to the platform development team if you which to adapt permissions. Enable perms with "drush vset platform_edit_permissions 1"'), 'warning');
+      }
+      else {
+        drupal_set_message(t('Admin do not forget to adapt tests, write hook update and export features to garanty the platform stability'), 'warning');
+      }
+      break;
+  }
+}
+
+/**
+ * Helpers
+ */
+
+/**
+ * Enable devel info for all
+ */
+function glue_enable_devel_output() {
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access devel information'));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access devel information'));
+}
+
+/**
+ * Sets the solr env based on what is found in the settings file
+ */
+function glue_site_set_solr_settings($name) {
+  $id = db_query("SELECT id FROM {search_api_server} WHERE machine_name = :machine_name", array(':machine_name' => $name))->fetchColumn();
+
+  $server = entity_load('search_api_server', array($id));
+  $server[$id]->options['host'] = variable_get('dropsolid_host_solr', '92.243.15.236');
+  $server[$id]->options['port'] = variable_get('dropsolid_port_solr', '8983');
+  $server[$id]->options['path'] = variable_get('dropsolid_path_solr', 'solr/');
+  $server[$id]->options['http_user'] = variable_get('dropsolid_http_user_solr');
+  $server[$id]->options['http_path'] = variable_get('dropsolid_http_path_solr');
+
+  entity_save('search_api_server', $server[$id]);
+}

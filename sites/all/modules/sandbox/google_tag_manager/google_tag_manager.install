@@ -1,0 +1,72 @@
+<?php
+
+/*
+ * $Id$
+ *
+ * Copyright 2012 Sasha Gerrand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * 	http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Covers module install hook functions.
+ *
+ * @author Sasha Gerrand <drupal.org-module-google_tag_manager@sgerrand.com>
+ * @version $Id$
+ * @package google_tag_manager
+ */
+
+/**
+ * Implements hook_install().
+ */
+function google_tag_manager_install() {
+	variable_set('google_tag_manager_account', '');
+	variable_set('google_tag_manager_enabled', '0');
+	variable_set('google_tag_manager_custom_name', '');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function google_tag_manager_uninstall() {
+	variable_del('google_tag_manager_account');
+	variable_del('google_tag_manager_enabled');
+	variable_del('google_tag_manager_custom_name');
+}
+
+/**
+ * Implements hook_requirements().
+ * @param string $phase
+ */
+function google_tag_manager_requirements($phase) {
+	$requirements = array();
+	$t = get_t();
+
+	if ($phase == 'runtime') {
+		$account = variable_get('google_tag_manager_account', '');
+		$enabled = variable_get('google_tag_manager_enabled', '0');
+
+		if ($enabled && empty($account) || !preg_match('/^GTM-\w+$/', $account)) {
+			$requirements['google_tag_manager'] = array(
+				'title' => $t('Google Tag Manager module'),
+				'description' => $t('The Google Tag Manager module has not been configured yet. Please configure its settings from the <a href="@url">Google Tag Manager settings page</a>.', array('@url' => url('admin/config/system/google_tag_manager'))),
+				'severity' => REQUIREMENT_ERROR,
+				'value' => $t('Not configured'),
+			);
+		}
+	}
+
+	return $requirements;
+}
+
+// vim: set filetype=php expandtab tabstop=2 shiftwidth=2 autoindent smartindent:

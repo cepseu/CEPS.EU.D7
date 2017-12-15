@@ -1,0 +1,173 @@
+@mixin respond-wrapper-fallback($name, $wrapper-class) {
+  .#{$wrapper-class} & {
+    @content;
+  }
+  @media screen and (min-width:$name) {
+    @content;
+  }
+}
+
+// Clearfix
+// --------
+// For clearing floats like a boss h5bp.com/q
+.clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: " ";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin remove-clearfix {
+  &:before,
+  &:after {
+    content: "";
+    display: none;
+  }
+}
+
+@mixin element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+// hidden
+@mixin hidden {
+  position: absolute;
+  left: -9999em;
+}
+
+.hidden {
+  @include hidden;
+}
+@mixin show-hidden {
+  position: static !important;
+  left: auto !important;
+}
+
+// Menu
+// -------------------------
+@mixin menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+    margin: 0;
+  }
+}
+
+// Button style
+// ------------------------
+@mixin button-link {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+// Vertical menu (mobile)
+// -------------------------
+@mixin vertical-menu {
+  @include menu;
+  li {
+    display: block;
+    a,
+    .nolink {
+      display: block;
+      text-decoration: none;
+    }
+  }
+  .lvl-2 {
+    margin: 0 10px;
+    padding-left: 0;
+  }
+}
+
+// Horizontal menu
+// -------------------------
+@mixin horizontal-menu {
+  @include menu;
+  font-size: 0;
+  li {
+    display: inline-block;
+    font-size: $base-font-size;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    a {
+
+    }
+  }
+  > li {
+    > a,
+    .nolink {
+      @include button-link;
+    }
+    &.expanded {
+      position: relative;
+    }
+    &:hover {
+      ul.menu {
+        left: 0;
+        z-index: 99;
+      }
+      a {
+        white-space: nowrap;
+      }
+    }
+  }
+  .lvl-3 {
+    @include hidden;
+    margin: 0;
+    li {
+      display: block;
+    }
+  }
+}
+
+%big-button {
+  @include button-link;
+  background: black;
+  background: linear-gradient(to bottom, #323232 0%, $base-text-color 100%);
+  box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1);
+  color: white;
+  font-family: $display-font-family;
+  font-size: 20px;
+  line-height: 56px;
+  padding: 0 1em;
+  text-transform: uppercase;
+  &:hover {
+    background: linear-gradient(to bottom, $base-text-color 0%, #323232 100%);
+  }
+  &:after {
+    background: url(../images/sprite.svg) no-repeat -692px -193px;
+    content: " ";
+    display: inline-block;
+    height: 14px;
+    margin-left: 0.75em;
+    width: 16px;
+    .lt-ie9 & {
+      background-image: url(../images/sprite.png);
+    }
+  }
+}
+
+%mega-button {
+  @include button-link;
+  @extend %big-button;
+  clear: both;
+  display: block;
+  font-size: 30px;
+  line-height: 72px;
+  &:after {
+    background-position: -686px -589px;
+    height: 24px;
+    //margin-left: 0.75em;
+    width: 27px;
+  }
+}

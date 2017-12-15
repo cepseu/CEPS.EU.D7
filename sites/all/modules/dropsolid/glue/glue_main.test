@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * A set of standard automated tests that can be run on a variety of pages.
+ */
+class SoTestingMainAnonymousTestCase extends SoRemoteTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Main test',
+      'description' => 'Main tests for anonymous users. Tests all pages for existence of main components, errors and checks page performance.',
+      'group' => 'DDCDEMO',
+    );
+  }
+
+  public function testMain() {
+    cache_clear_all();
+    variable_set('error_level', 2);
+
+    $user = 'Anonymous';
+    foreach ($this->getPagesToTest() as $page) {
+      //Request timing
+      $start = microtime();
+      $start = explode(' ', $start);
+      $start = $start[0] + $start[1];
+
+      $options = isset($page['options']) ? $page['options'] : array();
+      $out = $this->drupalGet($page['path'], $options);
+
+      $stop = microtime();
+      $stop = explode(' ', $stop);
+      $stop = $stop[0] + $stop[1];
+
+      //Valid response
+      $this->assertResponse(200, t('%user received valid html. 200 was returned.', array('%user' => $user)));
+
+      //Check performance
+      $time = $stop - $start;
+      $perf = isset($page['allowed_performance']) ? $page['allowed_performance'] : 2.1;
+      $this->assertTrue($time < $perf, t('Page with url:"@url" visited by user:"@user" received page within "@times" of limit "@due".', array('@url' => $page['path'], '@user' => $user, '@time' => round($time, 3), '@due' => $perf)));
+
+      //Errors
+      $this->assertNoRaw('<h2 class="element-invisible">' . t('Error message') . '</h2>', t('Geen error messages gevonden op de pagina :"@page"', array('@page' => $page['path'])));
+
+      //Restore
+      if (variable_set('so_env', 'test')) {
+        variable_set('error_level', 0);
+      }
+    }
+  }
+
+  /**
+   * Maintain a list of pages to run tests on
+   */
+  function getPagesToTest() {
+    $pages = array(
+      array(
+        // The path to test.
+        'path' => '<front>',
+        // The amount of time the page may take to render, in seconds.
+        'allowed_performance' => 3.000,
+      ),
+      /*array(        
+        'path' => 'does-not-exist',        
+        'allowed_performance' => 2.000,
+      )*/
+    );
+    
+    return $pages;
+  }
+
+}

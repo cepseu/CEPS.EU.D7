@@ -1,0 +1,6 @@
+name = Google Tag Manager
+description = Easily configure and implement Google Tag Manager
+core = 7.x
+package = Statistics
+configure = admin/config/system/google_tag_manager
+files[] = google_tag_manager.test

@@ -1,0 +1,1391 @@
+
+@font-face {
+	font-family: 'Flama Basic';
+	src: url("../fonts/Flama-Basic.eot");
+	src: url("../fonts/Flama-Basic.eot?#iefix") format("embedded-opentype"), 
+	url("../fonts/Flama-Basic.woff") format("woff"), 
+	url("../fonts/Flama-Basic.svg#svgFontName") format("svg");
+}
+/*
+@media print and (color) {
+   * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+   }
+}
+*/
+body {
+	margin: 1em;
+	background-color: #fff;
+	font-family: sans-serif;
+	min-width: 960px;
+}
+th {
+	text-align: left; /* LTR */
+	color: #006;
+	border-bottom: 1px solid #ccc;
+}
+tr.odd {
+	background-color: #ddd;
+}
+tr.even {
+	background-color: #fff;
+}
+td {
+	padding: 5px;
+}
+#main {
+	margin: 1em;
+}
+a:link {
+	color: #666;
+	text-decoration: none;
+}
+a:visited {
+	color: #666;
+	text-decoration: none;
+}
+a:hover {
+	color: #00f;
+}
+a:link img, a:visited img {
+	border: 0;
+}
+/*
+a, a:visited { 
+	text-decoration: underline; 
+}
+a[href]:after { 
+	content: " (" attr(href) ")"; 
+}
+abbr[title]:after { 
+	content: " (" attr(title) ")"; 
+}
+*/  
+em {
+	font-style: italic;
+}
+strong {
+	font-weight: bold;
+}
+p {
+	margin: 0 0 10px 0;
+	text-align: justify;
+	font-size: 17px;
+	line-height: 21px;
+}
+h1, h2, h3, h4 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	page-break-inside: avoid;
+}
+ul {
+	list-style-type: none;
+}
+.field-name-body ul {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.field-name-body ul li {
+	position: relative;
+	font-size: 17px;
+	line-height: 21px;
+	margin: 5px 0 0 0;
+	padding: 0 0 0 20px;
+}
+.field-name-body ul li:after {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 5px 0 0 0;
+	width: 7px;
+	height: 7px;
+	border: 2px solid #000;
+	content: "";
+}
+.field-name-body img {
+	max-width: 920px;
+}
+
+/**
+ * Header
+ */
+header {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	display: block;
+	width: 100%;
+}
+header:after {
+	content: "";
+	float: none;
+	clear: both;
+	display: block;
+	width: 100%;
+}
+.logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.logo img {
+	width: 100px;
+	height: auto;
+}
+.site-name {
+	display: none;
+	visibility: hidden;
+}
+.site-name-slogan {
+	width: 100%;
+	display: block;
+	margin: 0 0 5px 0;
+}
+.slogan {
+	font-family: Georgia, serif;
+	display: block;
+	font-size: 29px;
+	font-style: italic;
+	height: 50px;
+	line-height: 50px;
+  	padding: 0;
+	margin: 0 0 0 120px;
+}
+
+header .block-menu-block {
+	padding: 0;
+	margin: 15px 0 10px 0;
+	width: 100%;
+	height: 40px;
+	display: block;
+	overflow: hidden;
+}
+header .block-menu-block .menu {
+	display: none;
+	visibility: hidden;
+}
+ 
+/*
+header .block-menu-block .menu {
+  font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  margin: 0 0 0 120px;
+}
+header .block-menu-block .menu li {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 15px 0 0;
+	padding: 0;
+}
+header .block-menu-block .menu li.first {
+}
+header .block-menu-block .menu a {
+  color: #868686;
+  font-size: 18px;
+  line-height: 21px;
+  text-decoration: none;
+  display: block;
+}
+header .block-menu-block .menu a.active {
+	background: #f7f7f7;
+	color: #55816c;
+}
+*/
+/**
+ * ds-2col-stacked-fluid 
+ */
+.ds-3col-stacked-fluid {
+	position: relative;
+} 
+.ds-3col-stacked-fluid > .group-header,
+.ds-2col-stacked-fluid > .group-header {
+	margin: 25px 0;
+	width: 100%;
+	display: block;
+}
+.ds-3col-stacked-fluid > .group-header .field-type-image,
+.ds-2col-stacked-fluid > .group-header .field-type-image {
+	display: none;
+	visibility: hidden;
+}
+.ds-3col-stacked-fluid > .group-header .field-name-title,
+.ds-2col-stacked-fluid > .group-header .field-name-title {
+	text-align: center;
+	display: block;
+	margin: 50px auto 50px auto;
+	padding: 0 100px;
+}
+.node-type-project h1.page-title,
+.ds-3col-stacked-fluid > .group-header .field-name-title h1,
+.ds-2col-stacked-fluid > .group-header .field-name-title h1 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 43px;
+	line-height: 47px;
+	display: block;
+	font-weight: normal;
+}
+.node-type-project h1.page-title {
+	margin: 50px 0;
+	text-align: center;
+}
+.ds-3col-stacked-fluid > .group-header .field-type-date,
+.ds-2col-stacked-fluid > .group-header .field-type-date {
+	display: block;
+	margin: 25px 0;
+	text-align: center;
+	font-size: 19px;
+	line-height: 23px;
+}
+.node-type-project .ds-2col-fluid > .group-left,
+.ds-3col-stacked-fluid > .group-left,
+.ds-2col-stacked-fluid > .group-left {
+	position: relative;
+	width: 100%;
+	display: block;
+	margin: 25px 0;
+	padding: 0;
+}
+.node-type-project .ds-2col-fluid > .group-left .field-type-taxonomy-term-reference,
+.ds-2col-stacked-fluid > .group-left .field-name-downloaded,
+.ds-3col-stacked-fluid > .group-left .field-type-taxonomy-term-reference,
+.ds-2col-stacked-fluid > .group-left .field-type-taxonomy-term-reference {
+	position: relative;
+	float: left;
+	display: block;
+	margin: 0 25px 0 0;
+}
+.ds-2col-stacked-fluid > .group-left .field-name-downloaded {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	width: 110px;
+	height: 110px;
+	text-align: center;
+	padding: 0;
+	margin: 0 25px 0 0;
+	display: block;
+	border: 3px solid #666;
+}
+.ds-2col-stacked-fluid > .group-left .field-name-downloaded .prefix {
+	font-size: 12px;
+	line-height: 45px;
+	height: 39px;
+	display: block;
+	text-transform: uppercase;
+}
+.ds-2col-stacked-fluid > .group-left .field-name-downloaded .count {
+	font-size: 29px;
+	line-height: 29px;
+	height: 29px;
+	display: block;
+}
+.ds-2col-stacked-fluid > .group-left .field-name-downloaded .suffix {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-size: 13px;
+	line-height: 13px;
+	height: 32px;
+}
+.view-Projects .group-left .taxonomy-term,
+.node-type-project .ds-2col-fluid > .group-left .taxonomy-term,
+.ds-3col-stacked-fluid > .group-left .taxonomy-term,
+.ds-2col-stacked-fluid > .group-left .taxonomy-term {
+	position: relative;
+	width: 110px;
+	height: 110px;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	display: block;
+}
+.view-Projects .group-left .taxonomy-term h2,
+.node-type-project .ds-2col-fluid > .group-left .taxonomy-term h2,
+ds-3col-stacked-fluid > .group-left .taxonomy-term h2,
+.ds-2col-stacked-fluid > .group-left .taxonomy-term h2 {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 13px;
+	height: 42px;
+	line-height: 17px;
+	font-weight: normal;
+	text-shadow: none;
+	width: 100%;
+	overflow: hidden;
+	color: #999;
+}
+.ds-2col-stacked-fluid > .group-left .taxonomy-term h2 a {
+}
+.node-type-project .group-left .taxonomy-term .field-name-field-research-area-abbreviation,
+.view-Projects .group-left .taxonomy-term .field-name-field-research-area-abbreviation,
+.ds-3col-stacked-fluid > .group-left .taxonomy-term .field-name-field-research-area-abbreviation,
+.ds-2col-stacked-fluid > .group-left .taxonomy-term .field-name-field-research-area-abbreviation {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	position: absolute;
+	top: 40%;
+	left: 0;
+	height: 60%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 45px;
+	line-height: 45px;
+	overflow: hidden;
+	text-align: center;
+}
+.ds-3col-stacked-fluid > .group-left .field-type-taxonomy-term-reference img,
+.ds-2col-stacked-fluid > .group-left .field-type-taxonomy-term-reference img {
+	display: none;
+	visibility: hidden;
+}
+.node-type-project .group-right,
+.ds-2col-stacked-fluid .group-right {
+	margin: 25px 0;
+	width: 100%;
+	display: block;
+}
+.ds-3col-stacked-fluid .group-middle {
+	width: 70% !important;
+	padding: 0 5% 0 0;
+	display: block;
+	border-right: 1px solid #666666;
+} 
+.ds-3col-stacked-fluid .group-right {
+	width: 23% !important;
+	display: block;
+}
+.ds-3col-stacked-fluid .group-right .formatted-date-number {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 67px;
+	line-height: 67px;
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 4% 0 0;
+	padding: 0;
+	width: 33%;
+	overflow: hidden;
+	letter-spacing: -1px;
+}
+.ds-3col-stacked-fluid .group-right .formatted-date-rest {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	display: inline-block;
+	vertical-align: bottom;
+	padding: 0;
+	width: 63%;
+	overflow: hidden;
+}
+.ds-3col-stacked-fluid .group-right .formatted-date-rest .formatted-date-day-name {
+	font-style: italic;
+}
+.ds-3col-stacked-fluid .group-right .formatted-date-time {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	width: 100%;
+	font-size: 21px;
+	line-height: 27px;
+	display: block;
+	margin: 15px 0 0 0;
+	padding: 0;
+}
+.ds-3col-stacked-fluid .group-right .field-name-pricing-link {
+	margin: 25px 0 0 0;
+	width: 100%;
+	font-size: 19px;
+	line-height: 25px;
+	padding: 0;
+}
+.ds-3col-stacked-fluid .group-right .field-name-field-event1-id {
+	display: none;
+	visibility: hidden;
+}
+.node-type-project .group-right .field-name-body p,
+.ds-3col-stacked-fluid .group-middle .field-name-body p,
+.ds-2col-stacked-fluid .group-right .field-name-body p {
+	font-size: 19px;
+	line-height: 27px;
+	text-align: justify;
+}
+.ds-3col-stacked-fluid .group-middle .field-name-body a.link-button.green {
+	display: none;
+	visibility: hidden;
+}
+.panel-simple-stacked .field-name-field-event1-chair,
+.panel-simple-stacked .field-name-field-event1-speakers {
+	text-align: center;
+}
+.panel-simple-stacked .field-name-field-event1-chair dl,
+.panel-simple-stacked .field-name-field-event1-speakers dl {
+	width: 29%;
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	padding: 0 2%;
+}
+.panel-simple-stacked .field-name-field-event1-chair dl dt,
+.panel-simple-stacked .field-name-field-event1-speakers dl dt {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	text-shadow: none;
+	font-size: 21px;
+	line-height: 25px;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.panel-simple-stacked .field-name-field-event1-chair dl dt strong,
+.panel-simple-stacked .field-name-field-event1-speakers dl dt strong {
+	font-weight: normal;
+}
+.panel-simple-stacked .field-name-field-event1-chair dl dd,
+.panel-simple-stacked .field-name-field-event1-speakers dl dd {
+	padding: 0;
+	margin: 0;
+	font-size: 17px;
+	line-height: 23px;
+}
+
+.ds-2col-stacked-fluid > .group-footer {
+	position: relative;
+	margin: 50px 0 25px 0;
+	padding: 50px 50px 0 50px;
+	display: block;
+/*	overflow: hidden;
+	border: 1px solid red;
+*/
+}
+
+.ds-2col-stacked-fluid > .group-footer > .field-group-div {
+	display: none;
+	visibility: hidden;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid {
+	position: relative;
+	margin: 0 0 50px 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-left {
+	float: left;
+	width: auto;
+	margin: 0 30px 0 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-left .field-type-image {
+	display: inline-block;
+	vertical-align: top;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-right {
+	float: left;
+	width: auto;
+	margin: 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-right .field-name-title {
+	margin: 0 0 7px 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-right .field-name-title h2 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 27px;
+	line-height: 32px;
+	margin: 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-right .field-name-field-head-title {
+	font-size: 19px;
+	line-height: 23px;
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+.ds-2col-stacked-fluid > .group-footer .ds-2col-fluid .group-right .field-type-taxonomy-term-reference {
+	font-size: 17px;
+}
+
+/** 
+ * Topics (related) to publication
+ */
+.view-topic-related .ds-2col-fluid {
+}
+.view-topic-related .views-row {
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+	page-break-inside: avoid;
+}
+.view-topic-related .ds-2col-fluid > .group-left {
+	float: left;
+	padding-right: 40px;
+	width: 100px;
+	text-align: right;
+}
+.view-topic-related .ds-2col-fluid > .group-left .topic-box-color {
+	background: #666666 url(../images/sprite.svg) no-repeat;
+	content: "";
+	display: inline-block;
+	float: left;
+	height: 95px;
+	width: 108px;
+}
+.view-topic-related .ds-2col-fluid > .group-right {
+	position: relative;
+	float: none;
+	overflow: hidden;
+	width: auto;
+}
+.view-topic-related .ds-2col-fluid > .group-right h3 {
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-title {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 25px;
+	line-height: 31px;
+	margin: 0 0 7px 0;
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-authors {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	line-height: 25px;
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-authors .field-item {
+	margin: 0 0 5px 0;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+/*	color: #666666;
+*/
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-authors .field-item:after {
+	content: ",";
+	margin: 0 .5em 0 0;
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-authors .field-item a {
+/*	color: #666666;
+*/
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-authors .field-item:last-child:after {
+	content: "";
+	margin: 0 .5em 0 0;
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-publication-date:before {
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 60px;
+	height: 3px;
+	margin: -10px 0 0 0;
+	border-top: 3px solid #999999;
+}
+.view-topic-related .ds-2col-fluid > .group-right .field-name-field-book-publication-date {
+	position: relative;
+	font-size: 17px;
+	line-height: 21px;
+	margin: 20px 0 0 0;
+	color: #999999;
+}
+
+/**
+ * Full width titles on panes
+ */
+.wide-title .pane-title {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	margin: 50px 0;
+	text-align: center;
+	max-width: none;
+	padding: 0;
+	position: relative;
+	text-transform: uppercase;
+	width: auto;
+}
+.wide-title .pane-title:before {
+	border-bottom: 2px solid #d3d2d2;
+	height: 2px;
+	bottom: 14px;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 100%;
+}
+.wide-title .pane-title > span {
+	background: white;
+	display: inline-block;
+	line-height: 30px;
+	padding: 0 1em;
+	position: relative;
+}
+
+/**
+ * Events & Publications
+ */
+/* 
+.view-display-id-panel_pane_4 {
+}
+*/
+.view-Events ul,
+.view-pubs ul {
+	padding: 0;
+	margin: 0;
+}
+.view-Events .views-row,
+.view-pubs .views-row {
+	page-break-inside: avoid;
+	border-bottom: 1px solid #dddddd;
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+}
+.view-Events .ds-2col-fluid,
+.view-pubs .ds-2col-fluid {
+	padding: 0;
+	margin: 0;
+}
+.view-Events .ds-2col-fluid .group-left,
+.view-pubs .ds-2col-fluid .group-left {
+	display: none;
+	visibility: hidden;
+}
+.view-Events .ds-2col-fluid .group-right,
+.view-pubs .ds-2col-fluid .group-right {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.view-Events .ds-2col-fluid .group-right h2,
+.view-pubs .ds-2col-fluid .group-right h2 {
+	padding: 0;
+	margin: 7px 0 0 0;
+}
+.view-Events .ds-1col h2,
+.view-pubs .ds-1col h2 {
+	margin: 7px 0 0 0;
+}
+.view-Events .ds-1col h3,
+.view-pubs .ds-1col h3 {
+	padding: 0;
+	margin: 7px 0 0 0;
+	font-size: 21px;
+}
+.view-Events .ds-2col-fluid h3 {
+	font-size: 23px;
+	line-height: 27px;
+	margin: 0 0 10px 0;
+}
+.view-Events .ds-2col-fluid p {
+	font-size: 17px;
+	line-height: 21px;
+}
+.view-pubs .field-name-field-book-authors {
+	margin: 7px 0 0 0;
+}
+.view-pubs .field-name-field-book-authors .field-item {
+	margin: 0 0 5px 0;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+}	
+.view-pubs .field-name-field-book-authors .field-item:after {
+	content: ",";
+	margin: 0 .5em 0 0;
+}
+.view-pubs .field-name-field-book-authors .field-item:last-child:after {
+	content: "";
+	margin: 0 .5em 0 0;
+}
+
+/**
+ * Staff
+ */
+.panel-simple-stacked .pane-content {
+	padding: 0;
+}
+.panel-simple-stacked .view-staff {
+	margin: 0;
+	padding: 0;
+}
+.panel-simple-stacked .view-staff ul {
+	margin: 0;
+	padding: 0;
+}
+.panel-simple-stacked .view-staff .views-row {
+	width: 48%;
+	padding: 0;
+	margin: 0 0 15px 0;
+	display: inline-block;
+	vertical-align: top;
+}
+.panel-simple-stacked .view-staff .group-left {
+	display: inline-block;
+	vertical-align: top;
+	width: 27%;
+	margin: 0;
+	padding: 0;
+}
+.panel-simple-stacked .view-staff .group-right {
+	display: inline-block;
+	vertical-align: top;
+	width: 73%;
+	margin: 0;
+	padding: 0;
+}
+.panel-simple-stacked .view-staff .field-name-field-head-title {
+	font-size: 17px;
+	line-height: 21px;
+	margin: 0 0 10px 0;
+	padding: 0;
+	display: block;
+}
+.panel-simple-stacked .view-staff .group-right h2 {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.panel-simple-stacked .view-staff .group-right h2 a {
+	padding: 0;
+	margin: 0;
+}
+
+/**
+ * Staff Profile
+ */
+.ds-2col-stacked.node-profile {
+	margin: 50px 0 0 0 !important;
+	padding: 0;
+}
+.ds-2col-stacked.node-profile .group-left {
+	width: 24%;
+	margin: 0;
+	padding: 0;
+}
+.ds-2col-stacked.node-profile .group-left .field-label {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 5px 0 0;
+}
+.ds-2col-stacked.node-profile .group-left .field-items {
+	display: inline-block;
+	vertical-align: top;
+}
+.ds-2col-stacked.node-profile .field-name-field-head-phone {
+	margin: 10px 0 0 0;
+}
+.ds-2col-stacked.node-profile .field-name-field-head-email {
+	margin: 10px 0 0 0;
+}
+.ds-2col-stacked.node-profile .group-right {
+	width: 74%;
+	margin: 0;
+	padding: 0;
+}
+.ds-2col-stacked.node-profile .group-right h1 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 35px;
+	line-height: 41px;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.ds-2col-stacked.node-profile .group-right .field-name-field-head-title {
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-size: 19px;
+	line-height: 25px;
+}
+.ds-2col-stacked.node-profile .group-right .field-type-taxonomy-term-reference {
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-size: 19px;
+	line-height: 25px;
+}
+.ds-2col-stacked.node-profile .group-right p {
+	margin: 0 0 10px 0;
+	font-size: 17px;
+	line-height: 21px;
+}
+.ds-2col-stacked.node-profile .group-right .field-name-field-head-languages,
+.ds-2col-stacked.node-profile .group-right .field-name-field-head-education {
+	margin: 10px 0 0 0;
+	font-size: 17px;
+	line-height: 21px;
+}
+.ds-2col-stacked.node-profile .group-right .field-name-field-head-languages .field-label,
+.ds-2col-stacked.node-profile .group-right .field-name-field-head-education .field-label {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 19px;
+	line-height: 25px;
+	display: block;
+	margin: 0 0 7px 0;
+}
+
+/**
+ * Publications by author
+ */
+.view-publications-by-author {
+	margin: 50px 0 0 0;
+}
+.view-publications-by-author .views-row {
+	page-break-inside: avoid;
+	border-bottom: 1px solid #dddddd;
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+}
+.view-publications-by-author .views-row-last {
+	border-bottom: 0;
+}
+.view-publications-by-author .group-right {
+	width: 100%;
+	display: block;
+}
+.view-publications-by-author .group-right h3 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	line-height: 25px;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.view-publications-by-author .group-right .field-name-field-book-authors {
+	margin: 10px 0 0 0;
+	font-size: 17px;
+	line-height: 21px;
+}
+.view-publications-by-author .group-right .field-name-field-book-authors .field-item {
+	margin: 0 0 5px 0;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+}	
+.view-publications-by-author .group-right .field-name-field-book-authors .field-item:after {
+	content: ",";
+	margin: 0 .5em 0 0;
+}
+.view-publications-by-author .group-right .field-name-field-book-authors .field-item:last-child:after {
+	content: "";
+	margin: 0 .5em 0 0;
+}
+.view-publications-by-author .group-right .field-name-field-book-publication-date {
+	position: relative;
+	margin: 20px 0 0 0;
+	font-size: 17px;
+	line-height: 21px;
+}
+.view-publications-by-author .group-right .field-name-field-book-publication-date:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: -10px 0 0 0;
+	content: "";
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+}
+
+/**
+ * Topics
+ */
+.view-topics {
+}
+.view-topics .field-name-field-topic-image {
+	display: none;
+	visibility: hidden;
+}
+.view-topics .taxonomy-term {
+	border: 0 !important;
+}
+.pane-topics-list-of-2-pane-with-list h2,
+.pane-topics-highlighted-pane h1 {
+	position: relative;
+	margin: 0 0 25px 0;
+}
+.pane-topics-list-of-2-pane-with-list h2:after,
+.pane-topics-highlighted-pane h1:after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0 0 -10px 0;
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+	content: "";
+}
+.view-topics .view-topic-related .ds-1col .field-name-publication-embedded-list,
+.view-topics .view-topic-related .ds-1col .field-name-field-event1-date,
+.view-topics .view-topic-related .ds-1col .field-name-field-book-publication-date {
+	margin: 0 0 0 80px !important;
+}
+.view-topics .view-topic-related .ds-1col .field-name-title {
+	margin: 0 0 0 80px !important;
+}
+.view-topics .view-topic-related .ds-1col .field-name-title h2 {
+	margin: 0;
+	padding: 0;
+}
+.view-topics .view-topic-related .ds-1col .field-name-title a {
+	margin: 0;
+	padding: 0;
+}
+.view-topics .view-topic-related .ds-1col.node-book:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/pub-icon.png");
+	width: 60px;
+}
+.view-topics .view-topic-related .ds-1col.node-events:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/event-icon.png");
+	width: 60px;
+}
+.view-topics .view-topic-related .ds-1col.node-blog-post:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/blog-icon.png");
+	width: 60px;
+}
+
+.pane-topics-homepage-list-of-2-pane-with-list h3,
+.pane-topics-list-of-2-pane-with-list h3 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	line-height: 25px;
+	margin: 7px 0 0 0;
+	padding: 0;
+}
+.pane-topics-highlighted-pane h2 {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 23px;
+	line-height: 27px;
+	margin: 10px 0 0 0;
+}
+.pane-topics-highlighted-pane h2 a {
+	margin: 0;
+	padding: 0;
+}
+.pane-topics-homepage-list-of-2-pane-with-list .views-row,
+.pane-topics-list-of-2-pane-with-list .views-row,
+.pane-topics-highlighted-pane .views-row {
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid #cccccc;
+}
+.pane-topics-homepage-list-of-2-pane-with-list .views-row-last,
+.pane-topics-list-of-2-pane-with-list .views-row-last,
+.pane-topics-highlighted-pane .views-row-last {
+	border-bottom: 0;
+}
+
+/**
+ * Front page
+ */
+.view-frontpage-items {
+	margin: 50px 0 0 0 !important;
+}
+.view-frontpage-items .field-type-image {
+	display: none !important;
+	visibility: hidden !important;
+}
+.view-frontpage-items h2 {
+	margin: 0 0 10px 0;
+}
+.view-frontpage-items h2 a {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 25px;
+	line-height: 29px;
+}
+.view-frontpage-items .views-row {
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #cccccc;
+}
+.panel-3col-33-stacked h2.pane-title {
+	position: relative;
+	margin: 35px 0 25px 0 !important;
+}
+.panel-3col-33-stacked h2.pane-title:after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0 0 -10px 0;
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+	content: "";
+}	
+.panel-3col-33-stacked .more-link {
+	display: none;
+	visibility: hidden;
+}
+.panel-3col-33-stacked .view-news {
+}
+.panel-3col-33-stacked .view-news .views-row {
+	page-break-inside: avoid;
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #cccccc;
+}
+.panel-3col-33-stacked .view-news .field-name-quote-researcher-linked-media {
+	font-size: 17px;
+	line-height: 21px;
+	margin: 0 0 7px 0;
+}
+.panel-3col-33-stacked .view-news .field-name-field-quote-link2 a {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	line-height: 25px;
+}
+.panel-col-bottom .pane-research-areas-element-list-pane {
+	display: none;
+	visibility: hidden;
+}
+.panel-col-bottom .field-name-node-link {
+	display: none;
+	visibility: hidden;
+}
+.panel-col-bottom .field-name-body p {
+	font-size: 17px;
+	line-height: 23px;
+	margin: 0 0 7px 0;
+}
+
+/**
+ * Topic related topic detail page
+ */
+.page-taxonomy-term .panel-simple-stacked .ds-1col .field-name-field-topic-image {
+	display: none;
+	visibility: hidden;
+} 
+
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related {
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .views-row {
+	position: relative;
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #cccccc;
+	page-break-inside: avoid;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .views-row-last {
+	border-bottom: 0;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .ds-1col {
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .ds-1col.node-book:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/pub-icon.png");
+	width: 60px;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .ds-1col.node-events:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/event-icon.png");
+	width: 60px;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .ds-1col.node-blog-post:before {
+	float: left;
+	margin: 0 10px 0 0;
+	content: url("../images/blog-icon.png");
+	width: 60px;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-post-date,
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-publication-embedded-list,
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-field-event1-date {
+	position: relative;
+	margin: 0 0 10px 80px !important;
+	font-size: 17px;
+	line-height: 21px;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-title {
+	margin: 0 0 0 80px;
+	padding: 0;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-title h3 {
+	margin: 0;
+	padding: 0;
+}
+.pane-topic-related-topic-detail-page-big-list-pane .view-topic-related .field-name-title a {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 23px;
+	line-height: 27px;
+	padding: 0;
+	margin: 0;
+	color: #000;
+}
+.page-taxonomy-term .panel-simple-stacked .pane-taxonomy-term-detailed-topic {
+	display: none;
+	visibility: hidden;
+}
+
+/**
+ * Research areas
+ */
+.page-taxonomy-term-23 h1.page-title, 
+.page-taxonomy-term-22 h1.page-title, 
+.page-taxonomy-term-14 h1.page-title, 
+.page-taxonomy-term-7 h1.page-title,
+.page-taxonomy-term-4 h1.page-title,
+.page-taxonomy-term-1 h1.page-title {
+/*	text-align: center;
+	*/
+	margin: 50px 0 25px 0;
+}
+.page-taxonomy-term-23 .vocabulary-topics h2,
+.page-taxonomy-term-22 .vocabulary-topics h2,
+.page-taxonomy-term-14 .vocabulary-topics h2,
+.page-taxonomy-term-7 .vocabulary-topics h2,
+.page-taxonomy-term-4 .vocabulary-topics h2,
+.page-taxonomy-term-1 .vocabulary-topics h2 {
+	position: relative;
+}
+.page-taxonomy-term-23 .vocabulary-topics h2:after,
+.page-taxonomy-term-22 .vocabulary-topics h2:after,
+.page-taxonomy-term-14 .vocabulary-topics h2:after,
+.page-taxonomy-term-7 .vocabulary-topics h2:after,
+.page-taxonomy-term-4 .vocabulary-topics h2:after,
+.page-taxonomy-term-1 .vocabulary-topics h2:after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0 0 -10px 0;
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+	content: "";
+}
+.ds-1col .taxonomy-term-description ul {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.ds-1col .taxonomy-term-description ul li {
+	position: relative;
+	font-size: 17px;
+	line-height: 21px;
+	margin: 5px 0 0 0;
+	padding: 0 0 0 20px;
+}
+.ds-1col .taxonomy-term-description ul li:after {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 5px 0 0 0;
+	width: 7px;
+	height: 7px;
+	border: 2px solid #000;
+	content: "";
+}
+.ds-1col .taxonomy-term-description p {
+	font-size: 17px;
+	line-height: 21px;
+}
+.ds-1col .taxonomy-term-description p a.link-button.grey {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	border: 3px solid #000;
+	padding: 5px .7em;
+	margin: 10px 10px 0 0 !important;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 23px;
+	line-height: 30px;
+	height: 32px;
+	text-transform: uppercase;
+	box-shadow: none;
+	background-image: none;
+}
+.page-taxonomy-term-23 .panel-simple-stacked .panel-col-bottom,
+.page-taxonomy-term-22 .panel-simple-stacked .panel-col-bottom,
+.page-taxonomy-term-14 .panel-simple-stacked .panel-col-bottom,
+.page-taxonomy-term-7 .panel-simple-stacked .panel-col-bottom,
+.page-taxonomy-term-4 .panel-simple-stacked .panel-col-bottom,
+.page-taxonomy-term-1 .panel-simple-stacked .panel-col-bottom {
+	display: block;
+	visibility: visible;
+}
+.page-taxonomy-term-23 .research-area-links,
+.page-taxonomy-term-22 .research-area-links,
+.page-taxonomy-term-14 .research-area-links,
+.page-taxonomy-term-7 .research-area-links,
+.page-taxonomy-term-4 .research-area-links,
+.page-taxonomy-term-1 .research-area-links {
+	display: none;
+	visibility: hidden;
+}
+
+/**
+ * Projects
+ */
+.page-projects h1.page-title {
+	text-align: center;
+	margin: 50px 0 25px 0;
+}
+.view-Projects {
+	padding: 0;
+	margin: 0;
+}
+.view-Projects .views-row {
+	page-break-inside: avoid;
+	margin: 0 0 15px 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #dddddd;
+}
+.view-Projects .views-row-last {
+	border-bottom: 0;
+}
+.view-Projects .group-left {
+	width: 16%;
+}
+.view-Projects .group-left .field-type-taxonomy-term-reference .field-item {
+	margin: 10px 0 20px 0;
+}
+.view-Projects .group-left .field-name-field-project-date {
+	position: relative;
+	margin: 40px 0 0 0;
+	color: #000;
+	font-size: 17px;
+	line-height: 21px;
+	display: block;
+}
+.view-Projects .group-left .field-name-field-project-date:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: -15px 0 0 0;
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+	content: "";
+}
+.view-Projects .group-right h2 {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.view-Projects .group-right h2 a {
+	margin: 0;
+	padding: 0;
+}
+.view-Projects .group-right {
+	width: 82%;
+	margin: 0;
+	padding: 0;
+}
+.view-Projects .field-name-node-link {
+	display: none;
+	visibility: hidden;
+}
+
+/**
+ * Project page
+ */
+.node-type-project .field-name-field-project-date {
+	position: relative;
+	width: 100%;
+	padding: 40px 0 0 0;
+	margin: 0;
+	color: #000;
+	font-size: 17px;
+	line-height: 21px;
+	display: block;
+	overflow: hidden;
+}
+.node-type-project .field-name-field-project-date:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 20px 0 0 0;
+	width: 50px;
+	height: 3px;
+	border-top: 3px solid #000;
+	content: "";
+}
+.node-type-project .field-name-field-project-funded {
+	font-size: 19px;
+	line-height: 27px;
+	margin: 10px 0 0 0;
+}
+.node-type-project .field-name-field-project-funded .field-label {
+	display: inline-block;
+	vertical-align: top;
+}
+.node-type-project .field-name-field-project-funded .field-items {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/**
+ * Footer contact
+ */
+footer .region-footer-last {
+	font-family: "Flama Basic", Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	line-height: 25px;
+	margin: 25px 0 0 0;
+	padding: 25px 0 0 0;
+	border-top: 1px solid #cccccc;
+	page-break-inside: avoid;
+}
+footer .region-footer-last h2 {
+	font-size: 25px;
+	line-height: 25px;
+	margin: 0 0 15px 0;
+}
+footer .region-footer-last .social {
+	display: none;
+	visibility: hidden;
+}
+footer .copyright-block {
+	text-align: center;
+	margin: 15px 0 0 0;
+	padding: 15px 0 0 0;
+	border-top: 1px solid #cccccc;
+}
+/**
+ * Hidden elements
+ */
+header .block-views, 
+header .block-search, 
+header .block-wk-general {
+	display: none;
+	visibility: hidden;
+}
+.contextual-links-wrapper {
+	display: none;
+	visibility: hidden;
+}
+nav.tabs {
+	display: none;
+	visibility: hidden;
+}
+.field-name-paypal {
+	display: none;
+	visibility: hidden;
+}
+.group-pdf-prevew {
+	display: none;
+	visibility: hidden;
+}
+.panel-simple-stacked .panel-col-bottom {
+	display: none;
+	visibility: hidden;
+}
+footer .region-footer-top {
+	display: none;
+	visibility: hidden;
+}
+footer .footer-first-last .region-footer-first {
+	display: none;
+	visibility: hidden;
+}
+.pager {
+	display: none;
+	visibility: hidden;
+}
+.view-footer .fake-pager {
+	display: none;
+	visibility: hidden;
+}

@@ -1,0 +1,55 @@
+.page-research-areas {
+  .view-research-areas-taxonomy {
+    .views-row {
+      @include clearfix;
+      margin-bottom: 3em;
+      > .views-field-rendered-entity {
+        float: left;
+        margin-right: $grid-margin;
+      }
+      > .views-field-name {
+        a {
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      > .views-field-field-teaser-text {
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.view {
+  .item-list .pager-load-more {
+    border-top: none;
+    clear: both;
+    a {
+      @extend %big-button;
+      color: white;
+      min-width: 285px;
+      padding: 0 30px;
+    }
+  }
+}
+
+.research-area-links.pane-custom {
+  margin: 72px 0;
+  text-align: center;
+  .pane-content {
+    a {
+      @extend %big-button;
+      @include respond-wrapper-fallback($breakpoint_2, 'lt-ie9') {
+        margin-left: $grid-margin;
+        width: $col3-width;
+        &:first-child {
+          margin-left: 0;
+          margin-bottom: 10px;
+        }
+      }
+
+    }
+  }
+}

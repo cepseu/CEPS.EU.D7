@@ -1,0 +1,9 @@
+name = "glue testing"
+description = "The project testing code"
+core = 7.x
+version = "7.x-0.2"
+package = Dropsolid
+
+files[] = tests/main/glue_testing_main.test
+
+testing_api = 2.x

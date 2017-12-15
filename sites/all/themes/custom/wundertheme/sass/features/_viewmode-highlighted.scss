@@ -1,0 +1,34 @@
+.view-mode-highlighted {
+   position: relative;
+  // lots of following crap is for centering vertically
+  // see http://thephuse.com/development/the-best-way-to-vertically-align-in-css/
+  .field-name-title .field-item {
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+  .field-name-title .field-item:before,
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .field-name-title .field-item:before {
+    content: ' ';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+    /* this just takes care of whitespace added by having display:inline-block (there are other methods) */
+    margin-left: -0.25em;
+  }
+  h1 {
+    border: 4px solid white;
+    display: inline-block;
+    color: white;
+    font-size: 30px;
+    line-height: 60px;
+    padding: 0 20px;
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,16 @@
+name = Ddcdemo News
+core = 7.x
+package = Features
+php = 5.2.4
+version = 7.x-1.0
+project = ddcdemo_news
+dependencies[] = features
+dependencies[] = image
+dependencies[] = taxonomy
+features[features_api][] = api:1
+features[field][] = node-article-body
+features[field][] = node-article-field_image
+features[field][] = node-article-field_meta_data
+features[field][] = node-article-field_tags
+features[node][] = article
+features[taxonomy][] = tags

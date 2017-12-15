@@ -1,0 +1,214 @@
+<?php
+
+/**
+ * Implements hook_layouts_ctools_plugins_directory().
+ */
+/*function wk_newsletter_ctools_plugin_directory($module, $plugin) {
+  return 'plugins/' . $plugin;
+}*/
+
+/**
+ * Implements hook_theme().
+ */
+function wk_newsletter_theme() {
+
+  $theme = array(
+    'html_ceps_newsletter' => array(
+      'variables' => array(),
+      'template' => 'html-ceps-newsletter',
+      'path' => drupal_get_path('module', 'wk_newsletter') . '/templates',
+    ),
+    'page_ceps_newsletter' => array(
+      'template' => 'page-ceps-newsletter',
+      'path' => drupal_get_path('module', 'wk_newsletter') . '/templates',
+      'variables' => array(),
+    ),
+    'newsletter_subscription' => array(
+      'path'      => drupal_get_path('module', 'wk_newsletter') . '/templates',
+      'template'  => 'newsletter-subscription-form',
+      'variables' => array(),
+    )
+  );
+
+  return $theme;
+}
+
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function wk_newsletter_preprocess_html(&$vars) {
+  if (_wk_newsletter_is_newsletter()) {
+    $vars['theme_hook_suggestions'] = array('html_ceps_newsletter');
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function wk_newsletter_preprocess_page(&$vars) {
+  if ($node = _wk_newsletter_is_newsletter()) {
+    $vars['theme_hook_suggestions'] = array('page_ceps_newsletter');
+  }
+}
+
+/**
+ * Helper function to check if current page is a newsletter and not in the admin theme.
+ */
+function _wk_newsletter_is_newsletter(){
+  $node = menu_get_object();
+  global $theme;
+
+  if(isset($node->type)){
+    if(($node->type == 'newsletter' || $node->type == 'newsletter_weekly') && variable_get('admin_theme') != $theme){
+      return $node;
+    }
+  }
+  else{
+    return FALSE;
+  }
+}
+
+function wk_newsletter_ds_layout_info() {
+  $path = drupal_get_path('module', 'wk_newsletter');
+
+  $layouts = array(
+    'ds_1col_nocog' => array(
+      'label' => t('One column, no contextual links'),
+      'path' => $path . '/ds_layouts/ds_1col_nocog',
+      'regions' => array(
+        'ds_content' => t('Content')
+      ),
+      // optional, form only applies to node form at this point.
+      'form' => FALSE,
+    ),
+    'ds_2col_table' => array(
+      'label' => t('Two columns in a table'),
+      'path' => $path . '/ds_layouts/ds_2col_table',
+      'regions' => array(
+        'left' => t('Left'),
+        'right' => t('Right')
+      ),
+      'css' => TRUE,
+      // optional, form only applies to node form at this point.
+      'form' => FALSE,
+    ),
+    'ds_2col_table_stacked' => array(
+      'label' => t('Two columns in a table, stacked'),
+      'path' => $path . '/ds_layouts/ds_2col_table_stacked',
+      'regions' => array(
+        'left' => t('Left'),
+        'right' => t('Right'),
+        'bottom' => t('Bottom'),
+      ),
+      'css' => TRUE,
+      // optional, form only applies to node form at this point.
+      'form' => FALSE,
+    ),
+  );
+
+  return $layouts;
+}
+
+/**
+* Implements hook_block_info().
+*/
+function wk_newsletter_block_info() {
+  $blocks = array();
+  $blocks['newsletter_subscription_form'] = array(
+    'info' => t('Newsletter subscription form'),
+  );
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function wk_newsletter_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'newsletter_subscription_form':
+      $block['subject'] = '';
+      $block['content'] = array(
+        '#markup' => _wk_newsletter_newsletter_subscription_form(),
+        '#attached' => array(
+          'js' => array(drupal_get_path('module', 'wk_newsletter') . '/js/wk_newsletter.js'),
+        ),
+      );
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function wk_newsletter_field_formatter_info() {
+  return array(
+    'node_reference_plain_comma' => array(
+      'label' => t('Titlte (no link, comma separated)'),
+      'field types' => array('node_reference'),
+    ),
+    'text_default_parsed' => array(
+      'label' => t('Default (parsed)'),
+      'field types' => array('text', 'text_long', 'text_with_summary'),
+    ),
+  );
+}
+
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function wk_newsletter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
+  $result = array();
+  switch ($display['type']) {
+    case 'node_reference_plain_comma':
+      $count = count($items);
+      foreach ($items as $delta => $item) {
+        if ($item['access']) {
+          $item['node'] = node_load($item['nid']);
+          $node = $item['node'];
+          $label = entity_label('node', $node);
+          $result[$delta] = array(
+            '#markup' => check_plain($label),
+          );
+          $result[$delta]['#prefix'] = '<span>';
+          if (!$node->status) {
+            $result[$delta]['#prefix'] = '<span class="node-unpublished">';
+          }
+          if ($delta < ($count - 1)) {
+            $result[$delta]['#suffix'] = '</span>, ';
+          }
+          else {
+            $result[$delta]['#suffix'] = '</span>';
+          }
+        }
+      }
+      break;
+    case 'text_default_parsed':
+      foreach ($items as $delta => $item) {
+        $output = _text_sanitize($instance, $langcode, $item, 'value');
+        if ($display['type'] == 'text_trimmed') {
+          $output = text_summary($output, $instance['settings']['text_processing'] ? $item['format'] : NULL, $display['settings']['trim_length']);
+        }
+        $output = str_replace('<dd>', '<span>', $output);
+        $output = str_replace('<dt>', '<span class="speaker">', $output);
+        $output = str_replace('</dd>', '</span>', $output);
+        $output = str_replace('</dt>', '</span>, ', $output);
+        $result[$delta] = array('#markup' => $output);
+      }
+      break;
+  }
+
+  return $result;
+}
+
+function _wk_newsletter_newsletter_subscription_form() {
+  $items = array();
+  $output = theme('newsletter_subscription', $items);
+
+  return $output;
+}

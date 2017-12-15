@@ -1,0 +1,73 @@
+
+.panel-4col-stacked { 
+/*  overflow: hidden;  */
+}
+.panel-4col-stacked .center-wrapper {
+/*	padding-right: 0;
+	padding-left: 0;
+	*/
+}
+.panel-4col-stacked .panel-col-top, .panel-4col-stacked .panel-col-bottom { 
+	width: 100%; 
+	clear: both;
+}
+
+.panel-4col-stacked .panel-col-top .inside {
+	margin-bottom: 1em;
+}
+
+.panel-4col-stacked .center-wrapper .panel-col-left { 
+	float: left; 
+	width: 25%;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.panel-4col-stacked .center-wrapper .panel-col-left .inside { 
+	margin: 1em .5em 1em 0;
+}
+
+.panel-4col-stacked .center-wrapper .panel-col-midleft { 
+	float: left; 
+	width: 25%; 
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.panel-4col-stacked .center-wrapper .panel-col-midleft .inside { 
+	margin: 1em .5em 1em 0;
+}
+
+.panel-4col-stacked .center-wrapper .panel-col-midright { 
+	float: left; 
+	width: 25%; 
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.panel-4col-stacked .center-wrapper .panel-col-midright .inside { 
+	margin: 1em .5em 1em 0;
+}
+
+.panel-4col-stacked .center-wrapper .panel-col-right { 
+	float: left; 
+	width: 25%; 
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.panel-4col-stacked .center-wrapper .panel-col .inside { 
+	margin: 0 .5em 1em .5em;
+}
+
+.panel-4col-stacked .panel-col-right .inside { 
+	margin: 1em 0 1em .5em;
+}
+
+.panel-4col-stacked .panel-separator {
+	margin: 0 0 1em 0;
+}

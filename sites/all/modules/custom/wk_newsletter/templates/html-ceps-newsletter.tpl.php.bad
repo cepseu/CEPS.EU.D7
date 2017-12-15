@@ -1,0 +1,36 @@
+<?php
+/**
+ * @file
+ * Botanique Newsletter html file.
+ */
+header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>">
+<head profile="<?php print $grddl_profile; ?>">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <?php print $head; ?>
+  <title><?php print $head_title; ?></title>
+
+  <style type="text/css">
+  <?php
+    include DRUPAL_ROOT . base_path() . drupal_get_path('module', 'wk_newsletter') . '/css/newsletter.css.php';
+  ?>
+  </style>
+
+</head>
+<body class="<?php print $classes; ?>" <?php print $attributes;?>>
+  <?php print $page; ?>
+  <script>
+    (function(){
+      var links = document.getElementsByClassName('newsletter-static-link');
+      for (var i = 0, len = links.length; i < len; i++) {
+        links[i].parentNode.removeChild(links[i]);
+      }
+    })()
+  </script>
+</body>
+</html>

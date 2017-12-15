@@ -1,0 +1,28 @@
+.view-mode-newsletter_mini {
+  @include remove-clearfix;
+  .field-name-field-topic,
+  .field-type-node-reference {
+    color: $funeral-grey;
+    font-size: 16px;
+  }
+  .field-type-node-reference {
+    .field-item {
+      display: inline;
+      margin-right: 0.25em;
+      &:after {
+        content: ",";
+      }
+      &:last-child {
+        &:after {
+          content: "";
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

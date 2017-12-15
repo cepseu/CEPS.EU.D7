@@ -1,0 +1,42 @@
+.events-overview {
+  .views-row {
+    @include clearfix;
+  }
+}
+
+.formatted-date-wrapper {
+  font-family: $display-font-family;
+  max-width: 425px;
+  .formatted-date-number {
+    font-size: 65px;
+    display: inline-block;
+    color: $rainy-grey;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .formatted-date-rest {
+    display: inline-block;
+    padding-left: 20px;
+    margin-right: 20px;
+  }
+  .formatted-date-month-year {
+    color: $base-text-color;
+  }
+  .formatted-date-day-name {
+    font-style: italic;
+    color: $windy-grey;
+  }
+  .formatted-date-time {
+    span {
+      padding: 0 10px;
+    }
+  }
+}
+
+.field-name-pricing-link {
+  a {
+    color: $rainy-grey;
+    text-decoration: none;
+    font-size: 14px;
+  }
+}

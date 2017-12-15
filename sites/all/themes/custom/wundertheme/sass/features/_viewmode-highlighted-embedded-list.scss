@@ -1,0 +1,48 @@
+.view-mode-highlighted_embedded_list {
+  @include remove-clearfix;
+  .field-type-date {
+    color: $funeral-grey;
+    font-size: 16px;
+    padding-top: 8px;
+  }
+  .field-name-title {
+    padding-left: 94px;
+    h3 {
+      font-size: 30px;
+      margin-bottom: 0;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .topic-box-color {
+    background: $funeral-grey url(../images/sprite.svg) no-repeat;
+    content: " ";
+    display: inline-block;
+    float: left;
+    height: 65px;
+    margin-right: 24px;
+    width: 72px;
+    .lt-ie9 & {
+      background-image: url(../images/sprite.png);
+    }
+  }
+  &.node-blog-post {
+    .topic-box-color {
+      background-position: -14px -118px;
+    }
+  }
+  &.node-book {
+    .topic-box-color {
+      background-position: -214px -118px;
+    }
+  }
+  &.node-events {
+    .topic-box-color {
+      background-position: -114px -118px;
+    }
+  }
+}

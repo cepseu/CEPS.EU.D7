@@ -1,0 +1,83 @@
+/**
+ * Ubercart checkout form - XPress
+ */
+
+@media screen and (min-width: 1000px) {
+	#uc-cart-checkout-form {
+	    max-width: 1000px;
+    	padding: 0 36px;
+		margin: 25px auto;
+	}
+}
+#uc-cart-checkout-form {
+}
+.page-cart-checkout h1.page-title {
+	margin-bottom: 0;
+} 
+#uc-cart-checkout-form #delivery-address-pane {
+}
+#uc-cart-checkout-form #billing-address-pane .form-item,
+#uc-cart-checkout-form #delivery-address-pane .form-item {
+	margin: 0 0 5px 0;
+}
+#uc-cart-checkout-form .form-item > label {
+	margin: 0;
+	text-align: left;
+	font-size: 15px;
+	width: 150px;
+}
+#uc-cart-checkout-form #billing-address-pane .form-item input,
+#uc-cart-checkout-form #delivery-address-pane .form-item input {
+	padding: 5px;
+	width: 270px;
+	border: 1px solid #999999;
+}
+#uc-cart-checkout-form .form-type-select label {
+	float: left;
+}
+#uc-cart-checkout-form .form-type-select select {
+	position: relative;
+	width: 270px;
+    -webkit-border-radius: 0;
+	   -moz-border-radius: 0;
+			border-radius: 0;
+    padding: 5px;
+	line-height: 1;
+	height: 32px;
+	border: 1px solid #999999;
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+			appearance: none;
+	background-color: transparent;
+	background-image: url("images/select_arrow.png");
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+#uc-cart-checkout-form .form-type-select select:hover {
+	cursor: pointer;
+}
+#uc-cart-checkout-form .form-type-select:after {
+	display: none;
+	visibility: hidden;
+}
+#uc-cart-checkout-form .form-item-panes-billing-select-address,
+#uc-cart-checkout-form .form-item-panes-delivery-select-address {
+	margin: 10px 0 5px 0;
+	display: block;
+}
+#uc-cart-checkout-form .form-item-panes-billing-select-address label,
+#uc-cart-checkout-form .form-item-panes-delivery-select-address label {
+	padding-left: 4px;
+	width: 152px;
+}
+#uc-cart-checkout-form #edit-panes-payment-payment-method label > img {
+	display: inline-block;
+	vertical-align: top;
+}
+#uc-cart-checkout-form #paypal-includes {
+}
+#uc-cart-checkout-form #paypal-includes img {
+	display: inline-block;
+	vertical-align: top;
+	margin: 5px 5px 0 0;
+}

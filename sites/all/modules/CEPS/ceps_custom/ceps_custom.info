@@ -1,0 +1,9 @@
+name = "CEPS Custom"
+description = "Provides any custom functionalities for CEPS website. By Xpress"
+core = 7.x
+
+version = "7.x-1.0"
+core = "7.x"
+project = "ceps custom"
+datestamp = "1417219372"
+

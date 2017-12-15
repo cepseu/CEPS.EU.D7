@@ -1,0 +1,148 @@
+/**
+ * Layout
+ *
+ * All layout theming should go in this file
+ */
+
+header, footer, .main {
+  @extend .clearfix;
+}
+
+.container {
+  padding: 0 12px;
+  position: relative;
+  @media screen and (min-width: $breakpoint_1) {
+    padding: 0 ;
+  }
+  @media screen and (min-width: $breakpoint_2) {
+    margin: 0 auto;
+    max-width: $breakpoint_2;
+    padding: 0 ;
+  }
+}
+
+.panel-pane {
+  .pane-content,
+  .pane-title {
+    padding: 0 12px;
+    position: relative;
+    @media screen and (min-width: $breakpoint_1) {
+      margin: 0 auto 1em auto;
+      padding: 0 $breakpoint_1_padding;
+    }
+    @media screen and (min-width: $breakpoint_2) {
+      max-width: $breakpoint_2;
+      padding: 0 $breakpoint_2_padding;
+    }
+  }
+}
+
+.panel-col-main {
+  @include clearfix;
+  margin-bottom: 50px;
+}
+
+.center-wrapper {
+  @media screen and (min-width: $breakpoint_2) {
+    @include clearfix;
+    margin: 0 auto;
+    max-width: $breakpoint_2;
+    padding: 0 $breakpoint_2_padding;
+    .panel-panel {
+      float: left;
+      margin-left: $grid-margin;
+      width: $col3-width;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+    .pane-content,
+    .pane-title {
+      margin: 0;
+      padding: 0;
+    }
+    .pane-content {
+      clear: both;
+    }
+  }
+}
+
+.drupal-messages,
+.page-title,
+nav.tabs {
+  @media screen and (min-width: $breakpoint_2) {
+
+    max-width: $breakpoint_2;
+    padding: 0 $breakpoint_2_padding;
+  }
+}
+.drupal-messages {
+  margin: 0 auto;
+}
+.page-title {
+  margin: 40px auto;
+}
+nav.tabs {
+  @media screen and (min-width: $breakpoint_2) {
+    margin: 12px auto;
+  }
+}
+
+/**
+ * pages without panels
+ */
+.page-node-add,
+.page-user,
+.page-admin-structure-taxonomy {
+  .region-content,
+  .profile {
+    @media screen and (min-width: $breakpoint_2) {
+      margin: 0 auto 40px;
+      max-width: $breakpoint_2;
+      padding: 0 $breakpoint_2_padding;
+    }
+  }
+}
+
+/**
+ * footer layout
+ */
+
+footer {
+  .container {
+
+  }
+  .region-footer-top {
+    @include clearfix;
+    border-bottom: 1px solid $oasis-green-light;
+    padding-bottom: 25px;
+    padding-top: 45px;
+  }
+  .region-footer-first,
+  .region-footer-last {
+    margin-top: 25px;
+  }
+
+  @media screen and (min-width: $breakpoint_2) {
+    .region-footer-top {
+      padding-bottom: 65px;
+      padding-top: 85px;
+    }
+    .region-footer-first,
+    .region-footer-last {
+      height: 280px;
+      margin: 64px 0 30px;
+    }
+    .region-footer-first {
+      border-right: 1px solid $oasis-green-light;
+      float: left;
+      padding-right: 35px;
+      width: 600px;
+    }
+    .region-footer-last {
+      float: right;
+      padding-left: 35px;
+      width: 328px;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+.view-mode-embedded_list {
+  @include remove-clearfix;
+  margin-right: $grid-margin;
+  .field-type-date,
+  .field-name-post-date {
+    color: $funeral-grey;
+    font-size: 16px;
+  }
+  .field-name-title {
+    h3 {
+      font-size: 18px;
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .topic-box-color {
+    background: $funeral-grey url(../images/sprite.svg) no-repeat;
+    content: " ";
+    display: inline-block;
+    float: left;
+    height: 45px;
+    margin-right: 20px;
+    width: 50px;
+    .lt-ie9 & {
+      background-image: url(../images/sprite.png);
+    }
+  }
+  &.node-blog-post {
+    .topic-box-color {
+      background-position: -24px -27px;
+    }
+  }
+  &.node-book {
+    .topic-box-color {
+      background-position: -224px -27px;
+    }
+  }
+  &.node-events {
+    .topic-box-color {
+      background-position: -124px -27px;
+    }
+  }
+  > .field {
+    margin-left: 74px;
+  }
+  > .field-name-topic-box-color {
+    margin-left: 0;
+  }
+  > .field-name-publication-embedded-list {
+    color: $funeral-grey;
+  }
+}
+

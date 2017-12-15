@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<extension key="eu.tttp.publicautocomplete" type="module">
+  <file>publicautocomplete</file>
+  <name>public autocomplete field</name>
+  <description>This extension allows an anonymous user to have an autocomplete field instead of a free form one, to avoid mispelled/duplicate organisation names on the current employer</description>
+  <urls>
+    <url desc="Documentation">https://github.com/TechToThePeople/publicautocomplete</url>
+  </urls>
+  <license>agpl 3</license>
+  <maintainer>
+    <author>Xavier Dutoit</author>
+    <email>xavier@tttp.eu</email>
+  </maintainer>
+  <releaseDate>2012-07-13</releaseDate>
+  <version>1.4</version>
+  <compatibility>
+    <ver>4.4</ver>
+    <ver>4.5</ver>
+    <ver>4.6</ver>
+  </compatibility>
+  <comments>This needs some configuration change on your civicrm.settings.php. Read the README.md</comments>
+  <civix>
+    <namespace>CRM/Publicautocomplete</namespace>
+  </civix>
+</extension>

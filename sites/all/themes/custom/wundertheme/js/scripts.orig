@@ -1,0 +1,54 @@
+;(function($) {
+
+  "use strict";
+
+  Drupal.behaviors.searchShow = {
+    attach: function (context, settings) {
+      $('.open-search').once('searchShow').click(function(e) {
+        $(this).parents('header').toggleClass('with-search');
+        e.preventDefault();
+      });
+    }
+  };
+
+  Drupal.behaviors.publicationDownload = {
+    attach: function (context, settings) {
+      $('.field-name-publication-downloads .field-item > a').once('publicationDownload').each(function() {
+        $(this).click(function(e) {
+          if ($(this).next('.links').length) {
+            $(this).next('.links').slideToggle(250);
+            e.preventDefault();
+          }
+        });
+      });
+    }
+  };
+
+  Drupal.behaviors.eventForm = {
+    attach: function(context, settings) {
+      var that = this;
+      // Only act if there is a field group in front of the form.
+      $('.node-events.view-mode-detailed > .group-footer > .field-group-div + .webform-client-form', context)
+      .once('eventForm')
+      .each(function(i, el) {
+        that.init(el);
+      });
+    },
+    init: function(el) {
+      var $form = $(el),
+          $group = $form.parent(),
+          $wrap = $group.find('.field-group-div'),
+          $dateWrap = $('.node-events.view-mode-full .formatted-date-wrapper .formatted-date-rest'),
+          random = 'eventForm-anchor-' + (new Date()).getTime(),
+          $button = $('<a class="link-button arrow" href="#' + random + '">' + Drupal.t('Register') + '</a>'),
+          $button2 = $button.clone().attr('id', random);
+      $button2.appendTo($wrap);
+      $button.insertAfter($dateWrap);
+      $button.add($button2).bind('click', this.handler);
+      this.$form = $form;
+    },
+    handler: function(e) {
+      Drupal.behaviors.eventForm.$form.toggleClass('shown');
+    }
+  };
+})(jQuery);

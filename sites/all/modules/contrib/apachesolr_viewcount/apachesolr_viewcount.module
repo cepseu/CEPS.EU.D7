@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Implements of hook_menu().
+ *
+ * To configure apachesolr_viewcount module settings.
+ */
+function apachesolr_viewcount_menu() {
+  $items['admin/config/search/apachesolr/viewcount'] = array(
+    'title' => 'View count',
+    'description' => 'View count settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('apachesolr_viewcount_page_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'apachesolr_viewcount.admin.inc',
+    'weight' => 10,
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_apachesolr_index_document_build().
+ *
+ * Set the value of node view count to is_view_count.
+ */
+function apachesolr_viewcount_apachesolr_index_document_build(ApacheSolrDocument $document, $entity, $entity_type, $env_id) {
+  if (!empty($entity->nid)) {
+    $module_name = variable_get('apachesolr_viewcount_count_module');
+    if ($module_name == 'statistics') {
+      $view_count = statistics_get($entity->nid);
+      $view_count = $view_count['totalcount'];
+    }
+    elseif ($module_name == 'nodeviewcount') {
+      $view_count = _apachesolr_viewcount_get_count($entity->nid);
+    }
+    if (isset($view_count) && !empty($view_count)) {
+      $document->is_view_count = (int) $view_count;
+    }
+  }
+}
+
+/**
+ * Implements hook_apachesolr_prepare_query().
+ */
+function apachesolr_viewcount_apachesolr_query_prepare($query) {
+  // Add is_view_count field to query.
+  $query->addParam('fl', 'is_view_count');
+
+  // Make is_view_count field to be used for sorting based on the settings.
+  if (variable_get('apachesolr_viewcount_sorting') == 'yes') {
+    $query->setAvailableSort('is_view_count', array('title' => t('Popularity'), 'default' => 'desc'));
+  }
+}
+
+/**
+ * Custom function to return node count from node_view_count table based on nid.
+ *
+ * @param int $nid
+ *   Node id.
+ *
+ * @return int
+ *   Node view count.
+ */
+function _apachesolr_viewcount_get_count($nid) {
+  return db_query("SELECT nid from {nodeviewcount} nvc WHERE nvc.nid = :nid", array(':nid' => $nid))->rowCount();
+}

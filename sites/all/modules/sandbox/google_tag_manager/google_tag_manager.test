@@ -1,0 +1,293 @@
+<?php
+
+/*
+ * $Id$
+ *
+ * Copyright 2012 Sasha Gerrand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * 	http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Test suites for the Google Tag Manager module.
+ *
+ * @author Sasha Gerrand <drupal.org-module-google_tag_manager@sgerrand.com>
+ * @version $Id$
+ * @package google_tag_manager
+ */
+
+/**
+ * Functional test suite for the Google Tag Manager module.
+ *
+ * @author Sasha Gerrand <drupal.org-module-google_tag_manager@sgerrand.com>
+ * @version $Id$
+ * @package google_tag_manager
+ */
+class GoogleTagManagerWebTestCase extends DrupalWebTestCase {
+	/**
+	 * Representation of administrative user.
+	 * @access protected
+	 * @var object
+	 */
+	protected $admin_user;
+
+	/**
+	 * Representation of non-administrative user.
+	 * @access protected
+	 * @var object
+	 */
+	protected $web_user;
+
+	/**
+	 * Return information related to the test suite.
+	 * @return array
+	 */
+	public static function getInfo() {
+		return array(
+			'name' => t('Google Tag Manager functional tests'),
+			'description' => t('Executes test suite for Google Tag Manager module'),
+			'group' => t('Google Tag Manager'),
+		);
+	}
+
+	/**
+	 * Enable module and create user with specific permissions.
+	 */
+	public function setUp() {
+		parent::setUp('google_tag_manager');
+		
+		$permissions = array(
+			'access administration pages',
+			'administer google tag manager',
+		);
+		$this->admin_user = $this->drupalCreateUser($permissions);
+		$this->web_user = $this->drupalCreateUser();
+	}
+
+	/**
+	 * Get administrative configuration page for module as anonymous user.
+	 */
+	public function testGetAdminConfigurationForbiddenForAnonymousUser() {
+		$this->drupalGet('admin/config/system/google_tag_manager');
+		$this->assertResponse(403, 'Access forbidden for anonymous user');
+	}
+
+	/**
+	 * Get administrative configuration page for module as non-admin user.
+	 */
+	public function testGetAdminConfigurationForbiddenForNonAdminUser() {
+		$this->drupalLogin($this->web_user);
+
+		$this->drupalGet('admin/config/system/google_tag_manager');
+		$this->assertResponse(403, 'Access forbidden for non-admin user');
+	}
+
+	/**
+	 * Get administrative configuration page for module as admin user.
+	 */
+	public function testGetAdminConfigurationOkForAdminUser() {
+		$this->drupalLogin($this->admin_user);
+
+		$this->drupalGet('admin/config/system/google_tag_manager');
+		$this->assertResponse(200, 'Access granted for admin user');
+	}
+
+	/**
+	 * Get administrative configuration page for module and check for help text.
+	 */
+	public function testGetAdminConfigurationFormShowsHelpText() {
+		$this->drupalLogin($this->admin_user);
+
+		$this->drupalGet('admin/config/system/google_tag_manager');
+		$this->assertRaw(t('<a href="@url">Google Tag Manager</a> lets you add and update your website tags, easily and for free, whenever you want, without bugging the IT folks.', array('@url' => 'http://www.google.com/tagmanager/')), 'Help text displayed');
+	}
+
+	/**
+	 * Get administrative configuration page for module and check for account form field.
+	 */
+	public function testGetAdminConfigurationFormShowsAccountField() {
+		$this->drupalLogin($this->admin_user);
+
+		$this->drupalGet('admin/config/system/google_tag_manager');
+		$this->assertFieldByName(t('google_tag_manager_account'), '', 'Account form field displayed');
+
+	}
+
+	/**
+	 * Post invalid data to administrative configuration page and check for returned text.
+	 */
+	public function testPostAdminConfigurationFormWithInvalidDataReturnsError() {
+		$postData = array(
+			'google_tag_manager_account' => 'GTM-' . $this->randomString(4),
+		);
+		$this->drupalLogin($this->admin_user);
+
+		$this->drupalPost('admin/config/system/google_tag_manager', $postData, t('Save'));
+		$this->assertText(t('A valid Google Tag Manager container ID is case sensitive and is formatted like GTM-XXXX'), 'Account data saved and displayed');
+	}
+
+	/**
+	 * Post valid data to administrative configuration page and check for returned text.
+	 */
+	public function testPostAdminConfigurationFormWithValidDataSavesValues() {
+		$postData = array(
+			'google_tag_manager_account' => 'GTM-' . $this->randomName(4),
+		);
+		$this->drupalLogin($this->admin_user);
+
+		$this->drupalPost('admin/config/system/google_tag_manager', $postData, t('Save'));
+		$this->assertText(t('The configuration options have been saved.'), 'Account data saved and displayed');
+	}
+
+}
+
+/**
+ * Unit test suite for the Google Tag Manager module.
+ *
+ * @author Sasha Gerrand <drupal.org-module-google_tag_manager@sgerrand.com>
+ * @version $Id$
+ * @package google_tag_manager
+ */
+class GoogleTagManagerUnitTestCase extends DrupalUnitTestCase {
+	const TAG_SNIPPET = <<<EOL
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=##CONTAINER_ID##"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','##CUSTOM_NAME##','##CONTAINER_ID##');</script>
+<!-- End Google Tag Manager -->
+
+EOL;
+
+	/**
+	 * Return information related to the test suite.
+	 * @return array
+	 */
+	public static function getInfo() {
+		return array(
+			'name' => t('Google Tag Manager unit tests'),
+			'description' => t('Executes test suite for Google Tag Manager module'),
+			'group' => t('Google Tag Manager'),
+		);
+	}
+
+	/**
+	 * Load the module.
+	 */
+	public function setUp() {
+		drupal_load('module', 'google_tag_manager');
+		parent::setUp();
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_permission().
+	 */
+	public function testPermissionHookReturnsArray() {
+		$data = module_invoke('google_tag_manager', 'permission');
+		$this->assertTrue(is_array($data), 'Permission hook returns array');
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_permission().
+	 */
+	public function testPermissionHookReturnsExpectedKey() {
+		$data = module_invoke('google_tag_manager', 'permission');
+		$this->assertTrue(array_key_exists('administer google tag manager', $data), 'Permission exists');
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_permission().
+	 */
+	public function testPermissionHookReturnsExpectedValuesForKey() {
+		$data = module_invoke('google_tag_manager', 'permission');
+		$expected = array(
+			'title' => t('Administer Google Tag Manager'),
+			'description' => t('Perform maintenance tasks for Google Tag Manager'),
+		);
+		$this->assertIdentical($expected, $data['administer google tag manager'], 'Permission exists');
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_menu().
+	 */
+	public function testMenuHookReturnsArray() {
+		$data = module_invoke('google_tag_manager', 'menu');
+		$this->assertTrue(is_array($data), 'Menu hook returns array');
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_menu().
+	 */
+	public function testMenuHookReturnsExpectedAdminConfigKey() {
+		$data = module_invoke('google_tag_manager', 'menu');
+		$this->assertTrue(array_key_exists('admin/config/system/google_tag_manager', $data), 'Menu exists');
+	}
+
+	/**
+	 * Check for expected values returned from implementation of hook_menu().
+	 */
+	public function testMenuHookReturnsExpectedValuesForAdminConfigKey() {
+		$data = module_invoke('google_tag_manager', 'menu');
+		$expected = array(
+			'title' => t('Google Tag Manager'),
+			'description' => t('Perform maintenance tasks for Google Tag Manager'),
+			'page callback' => 'drupal_get_form',
+			'page arguments' => array('google_tag_manager_admin_settings_form'),
+			'access arguments' => array('administer site configuration'),
+			'type' => MENU_NORMAL_ITEM,
+			'file' => 'google_tag_manager.admin.inc',
+		);
+		$this->assertIdentical($expected, $data['admin/config/system/google_tag_manager'], 'Menu exists');
+	}
+
+	/**
+	 *  Run _google_tag_manager_snippet() with first parameter containing null data.
+	 */
+	public function testSnippetWithNullParamThrowsException() {
+		try {
+			$result = _google_tag_manager_snippet('');
+			$this->fail('Exception expected to be thrown');
+		}
+		catch (Exception $e) {
+			$this->pass('Exception was thrown as expected');
+		}
+	}
+
+	/**
+	 *  Run _google_tag_manager_snippet() with first parameter containing valid data.
+	 */
+	public function testSnippetWithOneParamIsValid() {
+		$id = $this->randomName(4);
+		$result = _google_tag_manager_snippet($id);
+		$expected = str_replace('##CUSTOM_NAME##', 'dataLayer', str_replace('##CONTAINER_ID##', $id, self::TAG_SNIPPET));
+
+		$this->assertIdentical($expected, $result, 'Snippet is as expected');
+	}
+
+	/**
+	 *  Run _google_tag_manager_snippet() with first and second parameters both containing valid data.
+	 */
+	public function testSnippetWithTwoParamsIsValid() {
+		$id = $this->randomName(4);
+		$name = $this->randomName(10);
+		$result = _google_tag_manager_snippet($id, $name);
+		$expected = str_replace('##CUSTOM_NAME##', $name, str_replace('##CONTAINER_ID##', $id, self::TAG_SNIPPET));
+
+		$this->assertIdentical($expected, $result, 'Snippet is as expected');
+	}
+}
+
+// vim: set filetype=php expandtab tabstop=2 shiftwidth=2 autoindent smartindent:

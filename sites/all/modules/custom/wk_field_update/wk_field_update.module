@@ -1,0 +1,199 @@
+<?php
+
+function wk_field_update_menu(){
+    $items['wk-field-update-ra'] = array(
+      'page callback' => 'wk_field_update_set_ra_batch',
+      'access arguments'  => array('administer content types'),
+      'type'  => MENU_NORMAL_ITEM
+    );
+    $items['wk-field-update-bs'] = array(
+      'page callback' => 'wk_field_update_set_bs_batch',
+      'access arguments'  => array('administer content types'),
+      'type'  => MENU_NORMAL_ITEM
+    );
+    $items['wk-field-update-done'] = array(
+      'page callback' => 'wk_field_update_done',
+      'access arguments'  => array('administer content types'),
+      'type'  => MENU_NORMAL_ITEM
+
+    );
+  return $items;
+}
+
+function wk_field_update_set_ra_batch() {
+
+  $batch = array(
+    'title' => 'Update Research Areas',
+    'operations'  => array(
+      array('wk_field_update_research_areas', array()),
+    ),
+    'progress_message' => t('Updating. Operation @current out of @total.'),
+    'error_message' => t('Error!'),
+    'finished' => 'wk_field_update_batch_finished',
+  );
+
+  batch_set($batch);
+  batch_process('wk-field-update-done');
+}
+
+function wk_field_update_set_bs_batch() {
+
+  $batch = array(
+    'title' => 'Update Book Series',
+    'operations'  => array(
+      array('wk_field_update_book_series', array()),
+    ),
+    'progress_message' => t('Updating. Operation @current out of @total.'),
+    'error_message' => t('Error!'),
+    'finished' => 'wk_field_update_batch_finished',
+  );
+
+  batch_set($batch);
+  batch_process('wk-field-update-done');
+}
+
+function wk_field_update_book_series(&$context){
+  drupal_set_message('Updating Book Series');
+
+  // Get Count of products
+  if (empty($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+
+  }
+  // Create Iteration variable
+  if (empty($context['sandbox']['iteration'])) {
+    $context['sandbox']['iteration'] = 0;
+  }
+
+  $limit = 20;
+
+  $total = db_query("SELECT entity_id, taxonomyextra_tid from {field_data_taxonomyextra} d
+            JOIN {taxonomy_term_data} t ON d.taxonomyextra_tid = t.tid
+            WHERE t.vid = 4 AND d.bundle = 'book'")->rowCount();
+
+  $result = db_query_range("SELECT entity_id, taxonomyextra_tid from {field_data_taxonomyextra} d
+            JOIN {taxonomy_term_data} t ON d.taxonomyextra_tid = t.tid
+            WHERE t.vid = 4 AND d.bundle = 'book'", $context['sandbox']['progress'], $limit);
+
+  $context['sandbox']['max'] = $total;
+
+
+  foreach ($result as $record) {
+    $node = node_load($record->entity_id);
+    $tids = array();
+
+    if (!empty($node->field_html_nl_pubs_area)) {
+      foreach ($node->field_html_nl_pubs_area[LANGUAGE_NONE] as $key => $tid) {
+        $tids[] = $tid['tid'];
+      }
+    }
+
+    if ((!empty($node->taxonomy_vocabulary_4) && !in_array($record->taxonomyextra_tid, $tids)) || (empty($node->taxonomy_vocabulary_4))) {
+
+      //i dunno - weird errors...
+      if(is_null($node->field_pub_pdf[LANGUAGE_NONE][0])){
+        $node->field_pub_pdf = array();
+      }
+      $node->field_html_nl_pubs_area[LANGUAGE_NONE][] = array('tid' => $record->taxonomyextra_tid);
+      entity_get_controller('node')->resetCache(array($node->nid));
+      field_attach_update('node', $node);
+
+      watchdog('wk_field_update', 'field updated for node %nid', array('%nid' => $node->nid));
+      $context['results'][] = $node->title;
+
+    }
+
+    $context['sandbox']['progress']++;
+    $context['results']['processed'] = $context['sandbox']['progress'];
+
+
+  }
+
+  if ($context['sandbox']['progress'] >= $context['sandbox']['max']) {
+    $context['finished'] = 1;
+  }
+  else {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+
+}
+
+
+function wk_field_update_research_areas(&$context){
+  drupal_set_message('Updating Research Areas');
+
+  // Get Count of products
+  if (empty($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+
+  }
+  // Create Iteration variable
+  if (empty($context['sandbox']['iteration'])) {
+    $context['sandbox']['iteration'] = 0;
+  }
+
+  $limit = 10;
+
+  $total = db_query("SELECT entity_id, taxonomyextra_tid from {field_data_taxonomyextra} d
+            JOIN {taxonomy_term_data} t ON d.taxonomyextra_tid = t.tid
+            WHERE t.vid = 3 AND d.bundle = 'book'")->rowCount();
+
+  $result = db_query_range("SELECT entity_id, taxonomyextra_tid from {field_data_taxonomyextra} d
+            JOIN {taxonomy_term_data} t ON d.taxonomyextra_tid = t.tid
+            WHERE t.vid = 3 AND d.bundle = 'book'", $context['sandbox']['progress'], $limit);
+
+  $context['sandbox']['max'] = $total;
+
+
+  foreach ($result as $record) {
+    $node = node_load($record->entity_id);
+    $tids = array();
+
+    if (!empty($node->taxonomy_vocabulary_3)) {
+      foreach ($node->taxonomy_vocabulary_3[LANGUAGE_NONE] as $key => $tid) {
+        $tids[] = $tid['tid'];
+      }
+    }
+
+    if ((!empty($node->taxonomy_vocabulary_3) && !in_array($record->taxonomyextra_tid, $tids)) || (empty($node->taxonomy_vocabulary_3))) {
+
+      //i dunno - weird errors...
+      if(is_null($node->field_pub_pdf[LANGUAGE_NONE][0])){
+        $node->field_pub_pdf = array();
+      }
+
+      $node->taxonomy_vocabulary_3[LANGUAGE_NONE][] = array('tid' => $record->taxonomyextra_tid);
+      field_attach_update('node', $node);
+
+      watchdog('wk_field_update', 'field updated for node %nid', array('%nid' => $node->nid));
+      $context['results'][] = $node->title;
+
+    }
+
+    $context['sandbox']['progress']++;
+    $context['results']['processed'] = $context['sandbox']['progress'];
+
+
+  }
+
+  if ($context['sandbox']['progress'] >= $context['sandbox']['max']) {
+    $context['finished'] = 1;
+  }
+  else {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+
+}
+
+function wk_field_update_batch_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('Update complete'));
+  }
+  else {
+    drupal_set_message(t('Update failed.'), 'error');
+  }
+}
+
+function wk_field_update_done(){
+  return t('Update done');
+}

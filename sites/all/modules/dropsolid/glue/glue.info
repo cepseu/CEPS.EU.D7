@@ -1,0 +1,10 @@
+name = "glue"
+description = "Glue code"
+core = 7.x
+version = "7.x-0.3"
+package = Dropsolid
+
+files[] = SoRemoteTestCase.test
+files[] = glue_main.test
+
+testing_api = 2.x

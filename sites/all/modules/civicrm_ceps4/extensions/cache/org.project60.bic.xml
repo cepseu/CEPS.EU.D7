@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<extension key="org.project60.bic" type="module">
+  <file>bic</file>
+  <name>Little BIC extension</name>
+  <description>Generates and maintains a list of banks</description>
+  <license>APGLv3</license>
+  <maintainer>
+    <author>B. Endres</author>
+    <email>endres@systopia.de</email>
+  </maintainer>
+  <releaseDate>2016-04-16</releaseDate>
+  <version>1.2</version>
+  <develStage>stable</develStage>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
+    <url desc="Documentation">https://github.com/Project60/org.project60.bic/blob/master/README.md</url>
+    <url desc="Support">https://github.com/Project60/org.project60.bic/issues/new</url>
+  </urls>
+  <compatibility>
+    <ver>4.4</ver>
+    <ver>4.5</ver>
+    <ver>4.6</ver>
+  </compatibility>
+  <comments>Developed by Carlos Capote and Bj&#xF6;rn Endres</comments>
+  <civix>
+    <namespace>CRM/Bic</namespace>
+  </civix>
+<downloadUrl>https://github.com/Project60/org.project60.bic/releases/download/1.2/org.project60.bic-1.2.zip</downloadUrl></extension>

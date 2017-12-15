@@ -1,0 +1,312 @@
+<?php
+
+
+
+function ceps_custom_menu() {
+  
+ $items = array();
+
+ $items['events/register/%'] = array(
+     'title' => 'CEPS event registration form', 
+  'description' => 'Here you can register for the CEPS event.',
+  'page callback' => 'drupal_get_form',
+  'page arguments' => array('ceps_event_register_form',2),
+  'access callback' => TRUE
+ );
+
+$items['events/register-completed/%/%'] = array(
+  'type' => MENU_CALLBACK,
+  'title' => t('Registration completed'),
+  'description' => 'Page for completed registration',
+  'page callback' => '_event_register_completed',
+  'page arguments' => array(2,3),
+  'access arguments' => array('access arguments page'),
+    );
+
+ return $items;
+}
+
+function _event_register_completed($option, $cid) {
+  
+   $content['#prefix']  = '<div class="panel-simple-stacked clearfix panel-display">';
+   $content['#prefix'] .= '<div class="panels-inner clearfix">';
+   $content['#prefix'] .= '<div class="panel-col-main panel-panel">';
+   $content['#prefix'] .= '<div class="inside">';
+   $content['#prefix'] .= '<div class="panel-pane pane-node-content">';
+   $content['#prefix'] .= '<div class="pane-content">';
+   $content['#prefix'] .= '<div class="ds-1col node node-page view-mode-full clearfix">';
+
+   $content['#suffix']  = '</div></div></div></div></div></div></div>';
+
+ $content['message'] = array(
+  '#markup' => 'Registration completed ... '. $option .'  for  '. $cid,
+ );
+ 
+ return $content;
+}
+
+function ceps_event_register_form($form, &$form_state, $option) {
+
+
+$form = array();
+ $form['#prefix']  = '<div class="panel-simple-stacked clearfix panel-display">';
+ $form['#prefix'] .= '<div class="panels-inner clearfix">';
+ $form['#prefix'] .= '<div class="panel-col-main panel-panel">';
+ $form['#prefix'] .= '<div class="inside">';
+ $form['#prefix'] .= '<div class="panel-pane pane-node-content">';
+ $form['#prefix'] .= '<div class="pane-content">';
+ $form['#prefix'] .= '<div class="ds-1col node node-page view-mode-full clearfix">';
+
+ $form['#suffix']  = '</div></div></div></div></div></div></div>';
+
+//dpm($option);
+//dpm($form_state);
+
+if (!civicrm_initialize()) {     return;  }
+
+$params = array(
+  'version' => 3,
+  'sequential' => 1,
+  'id' => $option,
+);
+$rslt = civicrm_api('Event', 'get', $params);
+$name = $rslt["values"][0]["event_title"];
+
+//dpm($rslt);
+//dpm($name);
+
+
+if (isset($form_state['result'])) {
+
+// Add markup field to show the result returned from submit.
+  $form['result_text'] = array(
+   '#markup' => $form_state['result']['text'],
+   '#attributes' => array('class' => array('register-result-text')),
+  );
+  if (!empty($form_state['result']['options'])) {
+   $form['result_options'] = array(
+    '#type' => 'select',
+    '#title' => t('Choose person'),
+    '#options' => $form_state['result']['options'],
+    '#default_value' => '',
+          '#description' => t('Select the person you would like to submit for this event.'),
+    '#required' => TRUE,
+    '#attributes' => array('class' => array('register-result-options')),
+
+   );
+  } 
+
+ $form['#submit'] = array('_person_event_register_form_submit');
+    $form['#validate'] = array('_person_event_register_form_validate');
+
+
+} else {
+
+
+ $form['register_email'] = array(
+     '#attributes' => array('class' => array('email', 'form-text', 'form-email')),
+     '#type' => 'textfield',
+     '#title' => t('Email'),
+     '#required' => TRUE,
+     '#default_value' => "",
+     '#description' => "Please enter your email.",
+     '#size' => 100,
+  '#maxlength' => 120,
+ ); 
+
+$form['#submit'] = array('_event_register_form_submit');
+
+}
+
+ $form['submit_button'] = array(
+  '#type' => 'submit',
+  '#value' => t('Register'),
+ );
+
+$form['option'] = array(
+   '#type' => 'hidden',
+   '#value' => $option,
+);
+
+return $form;
+}
+
+
+function _person_event_register_form_validate($form, &$form_state) {
+
+
+
+}
+
+
+function _person_event_register_form_submit($form, &$form_state) {
+
+$values = $form_state['values'];
+// dpm($values);
+
+//$form_state['rebuild'] = TRUE;
+$form_state['redirect'] = 'events/register-completed/'. $values['option'] . '/' . $values['result_options'];
+}
+
+function _event_register_form_validate($form, &$form_state) {
+
+ $valid_email = $form_state['values']['register_email'];
+ if (!valid_email_address($valid_email)) {
+  form_set_error('register_email', 'Sorry. Your email address,' . $valid_email . ', is not valid. Please submit a valid E-mail address.');
+   }
+
+}
+
+function _event_register_form_submit($form, &$form_state) {
+
+$form_state['rebuild'] = TRUE;
+if (!civicrm_initialize()) {     return;  }
+$values = $form_state['values'];
+$em = $values['register_email'];
+$ev = $form['option']['#value'];
+
+$outselect = array(
+  'text' => '',
+  'options' => array(),
+);
+
+$params = array(
+  'version' => 3,
+  'sequential' => 1,
+  'email' => $em,
+);
+$result = civicrm_api('Email', 'get', $params);
+
+$cnt = $result['count'];
+
+if ($cnt==1) {
+$outp = "<ul class=\"event-register-result\">";
+$cid = $result[values][0][contact_id];
+$params = array(
+  'version' => 3,
+  'sequential' => 1,
+  'contact_id' => $cid,
+);
+$rslt = civicrm_api('Contact', 'getsingle', $params);
+$outp .=  "<li>" . $rslt[display_name] . "</li><li>" .   $rslt[job_title] . "</li><li>If this is you <a href=registr?cid=$cid&ev=$ev&em=$em>Register</a></li></ul>";
+$outselect['text'] = "We have only one match";
+//$outselect['options'] = '- Select -';
+$outselect['options'][$cid] = $rslt[display_name] . ", " . $rslt[job_title]; 
+} else {
+$outp = "We have " . $cnt . " contacts with this email address.<br>Which one do you want to register for the event?<ul class=\"event-register-result\">";
+$outselect['text'] = "We have " . $cnt . " contacts with this email address.<br>Which one do you want to register for the event?";
+$outselect['options'][] = '- Select -';
+for ($i=0; $i<$cnt; $i++) {
+$j = $i + 1;
+$cid = $result[values][$i][contact_id];
+
+$params = array(
+  'version' => 3,
+  'sequential' => 1,
+  'contact_id' => $cid,
+);
+$rslt = civicrm_api('Contact', 'getsingle', $params);
+
+
+$outselect['options'][$cid] = $rslt[display_name] . ", " . $rslt[job_title];
+
+$outp .= "<li><span class=\"person\">$j - " . $rslt[display_name] . "</span><span class=\"position\">" .   $rslt[job_title] . "</span><span class=\"reg-link\"><a href=registr?cid=$cid&ev=$ev&em=$em>Register</a></span></li>";
+
+//print "<br>ID($i):<pre>";
+//print_r ($rslt);
+//print "</pre>";
+}
+$outp .= "</ul>";
+
+}
+  dpm($outselect);
+$form_state['result'] = $outselect;
+//$form_state['values']['search_result'] = $outp;
+}
+
+
+
+function ceps_custom_init() {
+
+	$options = array('preprocess' => FALSE, 'group' => CSS_THEME);
+	drupal_add_css(drupal_get_path('module', 'ceps_custom') . '/ceps_custom.css', $options);
+}
+
+function ceps_custom_theme_registry_alter(&$theme_registry) {
+
+	/**
+	 * Replace theme_webform_element function in theme registry
+	 */
+	if (isset($theme_registry['webform_element'])) {
+		$theme_registry['webform_element']['function'] = 'theme_ceps_custom_webform_element';
+	}	
+}
+
+function theme_ceps_custom_webform_element($vars) {
+
+	/**
+	 * Add div wrapper to children element before theme it
+	 */
+	$type	  = $vars['element']['#type'];
+	$children = $vars['element']['#children'];
+	if (($type == 'textfield') || ($type == 'select') || ($type == 'date') || ($type == 'webform_email') 
+								|| ($type == 'markup') || ($type == 'managed_file')) {
+		$class = str_replace("_", "-", $type);
+		$vars['element']['#children']  = '<div class="form-item-field ' . $class . '">';
+		$vars['element']['#children'] .= $children;
+		$vars['element']['#children'] .= '</div>';
+	}
+	if ($type == 'managed_file') {
+		$vars['element']['#children'] .= '<div class="clear"></div>';
+	}	
+	return theme_webform_element($vars);
+}
+
+function ceps_custom_form_alter(&$form, $form_state, $form_id) {
+  
+	global $user;
+	/**
+	 * Check for valid webform
+	 */
+	if (isset($form['#node']->type) && ($form['#node']->type == 'webform') && 
+					$form_id == ($form['#node']->type . '_client_form_' . $form['#node']->nid)) {
+		// attach css			
+		$form['#attached']['css'] = array(drupal_get_path('module', 'ceps_custom') . '/ceps_custom_webform.css');
+
+		//foreach($form['submitted'] as &$field) {
+		//	if(($field['#type'] == 'textfield') || ($field['#type'] == 'select')) {
+    	//	}
+  		//}
+	}
+	else if ($form_id == 'views_exposed_form') {
+		if ($form['#id'] == 'views-exposed-form-solr-search-search-advanced-page') {
+			/**
+			 * Change form action from advanced-search to search path
+			 * to prevent the hiding of primary menu links
+			 */
+			$form['#action'] = '/search';
+		}
+	}
+
+	if ($form_id == 'book_node_form') {
+    		$form['field_downloaded']['#access'] = FALSE;
+		$form['field_book_old_path']['#access'] = FALSE;
+		$form['taxonomyextra']['#access'] = FALSE;
+		$form['taxonomy_catalog']['#access'] = FALSE;
+  	}
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ *
+ * It simply tells panels where to find the .inc files that define various
+ * types of plugins: layouts, styles, args, contexts, content_types.
+ */
+function ceps_custom_ctools_plugin_directory($owner, $plugin_type) {
+
+	// We're just providing layout plugins.
+	if ($owner == 'panels' && $plugin_type == 'layouts') {
+		// ceps_custom_ctools_plugin_directory.
+		return "plugins/$plugin_type";
+	}
+}

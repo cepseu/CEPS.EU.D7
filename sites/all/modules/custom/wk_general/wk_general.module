@@ -1,0 +1,238 @@
+<?php
+/**
+ * Implements hook_entity_info_alter().
+ */
+function wk_general_entity_info_alter(&$entity_info) {
+  //add view modes for taxonomy terms
+  $entity_info['taxonomy_term']['view modes']['minimal'] = array(
+    'label' => t('Minimal'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['taxonomy_term']['view modes']['list'] = array(
+    'label' => t('List'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['taxonomy_term']['view modes']['highlighted'] = array(
+    'label' => t('Highlighted'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['taxonomy_term']['view modes']['detailed'] = array(
+    'label' => t('Detailed'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['taxonomy_term']['view modes']['newsletter_article'] = array(
+    'label' => t('Newsletter article'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['taxonomy_term']['view modes']['newsletter_mini'] = array(
+    'label' => t('Newsletter mini'),
+    'custom settings' => FALSE,
+  );
+  //add view modes for nodes
+  $entity_info['node']['view modes']['embedded_list'] = array(
+    'label' => t('Embedded list'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['highlighted_embedded_list'] = array(
+    'label' => t('Highlighted embedded list'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['detailed'] = array(
+    'label' => t('Detailed'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['mini_teaser'] = array(
+    'label' => t('Mini teaser'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['special'] = array(
+    'label' => t('Special'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['newsletter_article'] = array(
+    'label' => t('Newsletter article'),
+    'custom settings' => FALSE,
+  );
+  $entity_info['node']['view modes']['newsletter_mini'] = array(
+    'label' => t('Newsletter mini'),
+    'custom settings' => FALSE,
+  );
+}
+
+/**
+* Implements hook_block_info().
+*/
+function wk_general_block_info() {
+  $blocks = array();
+  $blocks['ceps_social'] = array(
+    'info' => t('Social links'),
+  );
+  $blocks['ceps_social_header'] = array(
+    'info' => t('Social links for header'),
+  );
+  $blocks['ceps_newsletter'] = array(
+    'info' => t('CEPS Newsletter link'),
+  );
+  $blocks['ceps_contact_info'] = array(
+    'info' => t('CEPS contact info'),
+  );
+  $blocks['ceps_newsletter_footer'] = array(
+    'info' => t('CEPS newsletter footer'),
+  );
+  $blocks['ceps_copyright_footer'] = array(
+    'info' => t('CEPS copyright footer'),
+  );
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function wk_general_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'ceps_social':
+      $block['subject'] = '';
+      $block['content'] = _wk_general_block_social();
+      break;
+    case 'ceps_social_header':
+      $block['subject'] = '';
+      $block['content'] = _wk_general_block_social();
+      break;
+    case 'ceps_newsletter':
+      $block['subject'] = '';
+      $block['content'] = _wk_general_block_newsletter();
+      break;
+    case 'ceps_contact_info':
+      $block['subject'] = t('Contact CEPS');
+      $block['content'] = variable_get('wk_general_contact_info', _wk_general_block_contact());
+      break;
+    case 'ceps_newsletter_footer':
+      $block['subject'] = t('CEPS newsletter footer');
+      $block['content'] = variable_get('wk_general_newsletter_footer', _wk_general_block_newsletter_footer());
+      break;
+    case 'ceps_copyright_footer':
+      $block['subject'] = t('CEPS copyright footer');
+      $block['content'] = _wk_general_block_copyright_footer();
+      break;
+  }
+  return $block;
+}
+
+function _wk_general_block_social() {
+  $output = '<div class="social">';
+  // email
+  $output .= '<a class="facebook" target="_blank" href="https://www.facebook.com/pages/Centre-for-European-Policy-Studies-CEPS/174179289289966">email</a>';
+  // twitter
+  $output .= '<a class="twitter" target="_blank" href="https://twitter.com/CEPS_thinktank">twitter</a>';
+  // linkedin
+  $output .= '<a class="linkedin" target="_blank" href="http://www.linkedin.com/company/ceps">linkedin</a>';
+  $output .= '</div>';
+  return $output;
+}
+
+/**
+ * Render function for the block.
+ */
+function _wk_general_block_newsletter() {
+  $output = '<div class="newsletter-left">';
+  $output .= '<h2>' . t('Stay Connected with Europe') . '</h2>';
+  $output .= '<h3>' . t('Sign up for email updates and our newsletter') . '</h3>';
+  $output .= '</div>';
+  $output .= '<div class="newsletter-right">';
+//  $output .= '<p class="newsletter-link">' . l(t('Subscribe here'), 'newsletter') . '</p>';
+  $output .= '<p class="newsletter-link">' . l(t('Subscribe here'), 'content/subscription-form') . '</p>';
+
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Render function for the block.
+ */
+function _wk_general_block_contact() {
+
+  $output = '<p>{domain.address}</p><p>Centre for European Policy Studies<br />';
+  $output .= '1 Place du Congres, 1000 Brussels<br />';
+  $output .= 'Tel: <a href="tel:+32 (0) 2 229 39 11">(+32 2)229 39 11</a><br />';
+  $output .= 'Fax: <a href="tel:+32 (0) 2 219 41 51">(+32 2)219 41 51</a><br />';
+  $output .= 'Email: <a href="mailto:info@ceps.eu">info@ceps.eu</a></p>';
+
+  return $output;
+}
+
+/**
+ * Render function for the block.
+ */
+function _wk_general_block_newsletter_footer() {
+
+  $output = '<p>';
+  $output .= 'You are receiving this email because you have subscribed to the CEPS mailing list<br />';
+  $output .= '</p>';
+
+  return $output;
+}
+
+/**
+ * Render function for the block.
+ */
+function _wk_general_block_copyright_footer() {
+
+  $output = '<p>';
+  $output .= 'CEPS &copy; ' . date('Y') . ' - <a href="/terms-of-use">Terms of use</a> - <a href="/privacy-policy">Privacy policy</a>';
+  $output .= '</p>';
+
+  return $output;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function wk_general_block_configure($delta = ''){
+  $form = array();
+
+  switch($delta){
+    case 'ceps_contact_info':
+      $form['info'] = array(
+        '#type' =>  'text_format',
+        '#title'  =>  t('CEPS contact info'),
+        '#default_value'  =>  variable_get('wk_general_contact_info', _wk_general_block_contact()),
+      );
+    break;
+    case 'ceps_newsletter_footer':
+      $form['info'] = array(
+        '#type' =>  'text_format',
+        '#title'  =>  t('CEPS contact info'),
+        '#default_value'  =>  variable_get('wk_general_newsletter_footer', _wk_general_block_newsletter_footer()),
+      );
+    break;
+  }
+
+  return $form;
+
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function wk_general_block_save($delta = '', $edit = array()){
+  switch($delta){
+    case 'ceps_contact_info':
+      variable_set('wk_general_contact_info', $edit['info']['value']);
+    break;
+    case 'ceps_newsletter_footer':
+      variable_set('wk_general_newsletter_footer', $edit['info']['value']);
+    break;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function wk_general_form_alter(&$form, &$form_state, $form_id) {
+
+	if ($form['#id'] == 'uc-cart-checkout-form') {
+		$form['#attached']['css'][] = drupal_get_path('module', 'wk_general') . '/uc_cart_checkout_form.css';
+	}
+}
